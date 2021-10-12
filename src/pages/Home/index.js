@@ -1,7 +1,7 @@
 import React from "react";
 import './home.css';
 import {Button} from "react-bootstrap";
-import 'bootstrap/dist/css/bootstrap.min.css'; // css for bootstrap
+
 const Home =()=>{
     
     return (

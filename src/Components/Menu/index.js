@@ -6,6 +6,7 @@ const Menu=()=>{
 
     return (
         <>
+        
         <Navbar bg="light" expand="lg">
         <Nav.Link as={Link}  className="HomeNav" to="/"> Home</Nav.Link>
 
@@ -14,10 +15,12 @@ const Menu=()=>{
       <Nav className="me-auto">
         <Nav.Link as={Link} to="/Uses">Use Cases</Nav.Link>
         <Nav.Link as={Link} to="/account-images">Saved Images</Nav.Link>
+        <Nav.Link as={Link} to="/login">Login</Nav.Link>
       </Nav>
     </Navbar.Collapse>
 
        </Navbar>
+      
         </>
 
     );
