@@ -1,0 +1,21 @@
+.item-block{
+  display: inline-block;
+  margin: 1.25rem ;
+  width: 12.5rem ;
+}
+
+.item-topic{
+  display: inline-block;
+}
+
+.item-image{
+  height: 9.375rem ;
+  width: 9.375rem;
+  justify-content: center;
+  padding-left: 0.625rem;
+}
+
+.item-image-gaming{
+  height: 10.938rem ;
+  width: 10.938rem ;
+}

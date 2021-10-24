@@ -1,17 +1,34 @@
+import UseCaseItem from "./UseAreasComponents/UseCaseItem";
+import { UseCaseItemBrief } from "./UseAreasComponents/useCaseItemBriefContent";
+import classes from './Index.module.css' ;
+
 const UseAreas=()=>{
 
     return (
         <>
         <div className="Usecases">
-         <div>
-             <h2>Reallusion</h2>
-             <p>We are partnering with Reallusion, a 2D and 3D animation software company. Generated Photos are used in the Headshot plugin to create realistic 3D heads from single photos. This is a part of character development, which has various applications in 3D animation, game and VR design, architectural or any other kind of visualization, advertising, and other fields.</p>
+         <div id="heading">
+           <center>
+            <h2>Where Generated Photos are Used</h2>
+            <p>
+              We find the application of Human-Face-Generation in a wide range of 
+              places. From small-scale tech-amateur business people for 
+              advertising products, to  ML/AI model developers
+              for their data set for training, we see the the scope and range
+              of our product's utility.
+            </p>
+           </center>
          </div>
-         <div>
-             <h2>SAP</h2>
-             <p>
-            SAP used Generated Photos as avatars in a free trial version of one of its strategic software products. The photos match ethnicity, age, and gender of the demo user profiles and look consistently in the application. It was important for the company that the images can be used without legal worries, such as copyrights and royalties.</p>
+
+         <div className={classes['brief-items']}> 
+             {UseCaseItemBrief.map(item => (
+               <UseCaseItem
+                   image={item.pic}
+                   topic={item.topic}
+               />
+             ))}
          </div>
+
         </div>
         </>
     );
