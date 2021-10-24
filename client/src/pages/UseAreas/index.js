@@ -1,5 +1,5 @@
-import UseCaseItem from "./UseAreasComponents/UseCaseItem";
-import { UseCaseItemBrief } from "./UseAreasComponents/useCaseItemBriefContent";
+import UseCaseItem from "./UseAreasComponents/Brief/UseCaseItem";
+import {UseCaseItemBrief} from "./UseAreasComponents/Brief/useCaseItemBriefContent" ;
 import classes from './Index.module.css' ;
 
 const UseAreas=()=>{
@@ -9,8 +9,8 @@ const UseAreas=()=>{
         <div className="Usecases">
          <div id="heading">
            <center>
-            <h2>Where Generated Photos are Used</h2>
-            <p>
+            <h2 className={classes.h1tag}>Where Generated Photos are Used</h2>
+            <p className={classes.ptag}>
               We find the application of Human-Face-Generation in a wide range of 
               places. From small-scale tech-amateur business people for 
               advertising products, to  ML/AI model developers
@@ -27,6 +27,10 @@ const UseAreas=()=>{
                    topic={item.topic}
                />
              ))}
+         </div>
+
+         <div className={classes['detail-items']}>
+
          </div>
 
         </div>

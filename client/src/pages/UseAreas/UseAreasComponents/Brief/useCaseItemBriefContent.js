@@ -1,8 +1,8 @@
-import advertisingImage from './images/advertising.jpg' ;
-import bookImage from './images/book.jpg' ;
-import prototypeImage from './images/prototype.jpg' ;
-import gamingImage from './images/gaming.jpg' ;
-import datasetImage from './images/dataset.jpg' ;
+import advertisingImage from '../images/advertising.jpg' ;
+import bookImage from '../images/book.jpg' ;
+import prototypeImage from '../images/prototype.jpg' ;
+import gamingImage from '../images/gaming.jpg' ;
+import datasetImage from '../images/dataset.jpg' ;
 import classes from './UseCaseItem.module.css' ;
 
 const UseCaseItemBrief = [
