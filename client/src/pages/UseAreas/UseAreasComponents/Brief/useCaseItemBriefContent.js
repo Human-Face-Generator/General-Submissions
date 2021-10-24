@@ -1,8 +1,8 @@
-import advertisingImage from '../images/advertising.jpg' ;
-import bookImage from '../images/book.jpg' ;
-import prototypeImage from '../images/prototype.jpg' ;
-import gamingImage from '../images/gaming.jpg' ;
-import datasetImage from '../images/dataset.jpg' ;
+import advertisingImage from '../images/briefImages/advertising.jpg' ;
+import bookImage from '../images/briefImages/book.jpg' ;
+import prototypeImage from '../images/briefImages/prototype.jpg' ;
+import gamingImage from '../images/briefImages/gaming.jpg' ;
+import datasetImage from '../images/briefImages/dataset.jpg' ;
 import classes from './UseCaseItem.module.css' ;
 
 const UseCaseItemBrief = [
@@ -11,8 +11,8 @@ const UseCaseItemBrief = [
         topic: "Business Advertisement"
     },
     {
-        pic: <img className={classes['item-image']} src={bookImage}></img> ,
-        topic: "Book Covers" 
+        pic: <img className={classes['item-image']} src={datasetImage}></img>,
+        topic: "Dataset for ML/AI Models"
     },
     {
         pic: <img className={classes['item-image']} src={prototypeImage}></img>,
@@ -23,8 +23,8 @@ const UseCaseItemBrief = [
         topic: "Gaming Industry"
     },
     {
-        pic: <img className={classes['item-image']} src={datasetImage}></img>,
-        topic: "Dataset for ML/AI Models"
+        pic: <img className={classes['item-image']} src={bookImage}></img> ,
+        topic: "Book Covers" 
     }
 ] ;
 

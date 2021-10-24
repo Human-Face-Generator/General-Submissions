@@ -1,5 +1,8 @@
 import UseCaseItem from "./UseAreasComponents/Brief/UseCaseItem";
-import {UseCaseItemBrief} from "./UseAreasComponents/Brief/useCaseItemBriefContent" ;
+import DetailItem from "./UseAreasComponents/Detail/DetailItem";
+
+import { DetailsItemContent } from "./UseAreasComponents/Detail/DetailItemContent";
+import {UseCaseItemBrief} from "./UseAreasComponents/Brief/useCaseItemBriefContent";
 import classes from './Index.module.css' ;
 
 const UseAreas=()=>{
@@ -29,8 +32,19 @@ const UseAreas=()=>{
              ))}
          </div>
 
-         <div className={classes['detail-items']}>
+         
 
+         <div className={classes['detail-items']}>
+            <center>
+              <h1 className={classes.useCasesTag}>Use Cases</h1>
+            </center>
+            {DetailsItemContent.map(item => (
+              <DetailItem 
+                topic={item.topic}
+                pic={item.pic}
+                details={item.details}
+              />
+            ))}
          </div>
 
         </div>

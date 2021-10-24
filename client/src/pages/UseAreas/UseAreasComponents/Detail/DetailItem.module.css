@@ -1,0 +1,21 @@
+.item-box{
+    margin: 2.5rem;
+    margin-top: 1.5rem;
+    padding: 1.25rem;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+}
+
+.item-pic{
+  margin: 1.25rem;
+  /* display: inline-block; */
+  height: 40%;
+  width: 40%;
+  float: left;
+  padding: 0 1.25rem 1.25rem 0;
+}
+
+.item-details{
+    margin-right: 1.25rem;
+    margin-left: 1.25rem;
+    padding: 0.938rem;
+}
