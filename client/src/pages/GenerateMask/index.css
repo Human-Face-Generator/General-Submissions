@@ -1,0 +1,16 @@
+.tools {
+    display: flex;
+    justify-content: space-between;
+    width: 400px;
+  }
+
+.App {
+    text-align: center;
+  }
+  
+
+.tools {
+  display: flex;
+  justify-content: space-between;
+  width: 400px;
+}
