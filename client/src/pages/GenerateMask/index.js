@@ -1,9 +1,15 @@
 import './index.css';
 import classNames from './index.css'
 import { useEffect, useState } from 'react';
-import CanvasDraw from "react-canvas-draw";
+// import CanvasDraw from "react-canvas-draw";
+import CanvasDraw from "../../Components/CanvasDraw";
 import { saveAs } from 'file-saver';
 function GenerateMask() {
+
+  const fetchmaskURL="http://localhost:5000/createMask";
+  const createFaceURL="http://localhost:5000/createFace";
+  const fetchrandomFaceURL="http://36a9-34-71-167-105.ngrok.io/";
+  
   const defaultProps = {
     onChange: null,
     loadTimeOffset: 5,
@@ -38,7 +44,7 @@ function GenerateMask() {
   var loadableCanvas, saveableCanvas;
 
   const fetchrandomFace=async(event)=>{
-    let response = await fetch('http://36a9-34-71-167-105.ngrok.io/'
+    let response = await fetch(fetchrandomFaceURL
     ).then((response) => response)
       .then(result => result)
       .catch((err) => console.error(err))
@@ -55,7 +61,7 @@ function GenerateMask() {
     var formData = new FormData();
     formData.append("file", event.target.files[0])
     // console.log(formData.get("file"))
-    let response = await fetch(`http://localhost:5000/createMask`, {
+    let response = await fetch(fetchmaskURL, {
       'method': 'POST',
       'body': formData
     }).then((response) => response)
@@ -65,6 +71,7 @@ function GenerateMask() {
     // saveAs(res,"01.png");
     localStorage.setItem("mask", window.URL.createObjectURL(res));
     setState({ ...state, uimg: localStorage.getItem("mask"), width: 512, height: 512 })
+    if(saveableCanvas)saveableCanvas.drawImage()
   }
 
   const fetchnewFace=async(event)=>{
@@ -73,7 +80,7 @@ function GenerateMask() {
       saveableCanvas.getSaveData()
     );
     console.log(localStorage.getItem("savedDrawing"));
-    let response = await fetch(`http://localhost:5000/createFace`, {
+    let response = await fetch(createFaceURL, {
       'method': 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -169,8 +176,10 @@ function GenerateMask() {
           canvasWidth={state.width}
           canvasHeight={state.height}
           imgSrc={state.uimg}
+          // refreshBackgroundImage={true}
         />
-        {newFace?<img src={newFace} alt={"no image"} />:null}
+        {/* <p>{state.uimg}</p> */}
+        {newFace?<img src={newFace}  />:null}
       </div>
     </div>
   );
