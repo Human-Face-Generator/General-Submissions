@@ -6,7 +6,7 @@ import SavedImages from "./pages/SavedImages";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Menu from "./Components/Menu";
-
+import GenerateMask from"./pages/GenerateMask";
 function App() {
   return (
     <div className="App">
@@ -18,6 +18,7 @@ function App() {
      <Route path="/account-images"><SavedImages/></Route>
      <Route path="/signup"><Signup/></Route>
      <Route path="/login"><Login/></Route>
+     <Route path="/generateMask"><GenerateMask/></Route>
       </Switch>
 
      </Router>
