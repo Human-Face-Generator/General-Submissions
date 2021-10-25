@@ -71,7 +71,12 @@ app.post("/LoginInfo",async (req,res)=>{
 });
 
 
-
+// getting saved images
+app.get("/ImageLists",(req,res)=>{
+  
+    
+    
+})
 
 app.listen(3004,()=>{
     console.log("Server running at 3004");

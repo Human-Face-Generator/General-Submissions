@@ -1,5 +1,6 @@
 #heading{
-    font-size: 130%;
+    font-size: 160%;
+    
 }
 
 .homepage{
@@ -7,15 +8,42 @@
     flex-direction:column;
     justify-content: space-around;
     align-items: center;
-    height:300px;
+    height:200px;
     width:70%;
-    padding-top: 7%;
+    margin:5% auto;
+   
+   
 }
 
 .btns{
     display: flex;
     flex-direction: row;
    justify-content: space-around;
-    width: 80%;
-   
+    width: 70%;  
+}
+
+
+.carousel,.carousel-inner,.d-block{
+    height:400px;
+    width:40%;
+}
+
+.carousel-control-next,.carousel-control-prev{  
+    height:400px; 
+}
+
+.carousel{
+    margin:4% auto;
+}    
+.d-block{
+    border-radius: 6px;
+}
+
+.carousel-control-next-icon,.carousel-control-prev-icon{
+    background-color: rgb(0, 0, 0); 
+    
+}
+
+.sr-only{
+    visibility: hidden;
 }
