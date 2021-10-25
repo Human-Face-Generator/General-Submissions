@@ -28,7 +28,7 @@ function GenerateMask() {
       width: 0,
       height: 0,
       brushRadius: 4,
-      lazyRadius: 12,
+      lazyRadius: 1,
       uimg: null,
     }
   });
