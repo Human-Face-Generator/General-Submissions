@@ -42,9 +42,10 @@ const SignupForm=()=>{
        <>
        <div className="formContainer" >
        
-        <p>
+        <h3 className="signupHeading">
             Create an account to get started
-        </p>
+        </h3>
+        <br/>
         <form className="form-elements" > 
 
             <div className="inputfield">

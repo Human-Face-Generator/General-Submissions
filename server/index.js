@@ -1,8 +1,9 @@
-const express= require("express");
+const express=require("express");
 const app=express();
-const cors=require('cors');
+const cors=require("cors");
 const mongoose=require("mongoose");
-const SignupModel = require("./models/SignupModel");
+const SignupModel =require("./models/SignupModel");
+const SavedImagesModel= require("./models/SavedImagesModel");
 
 mongoose.connect("mongodb+srv://Stark:stark123@hfg.prgke.mongodb.net/HFG?retryWrites=true&w=majority",
  { useNewUrlParser: true },{ useUnifiedTopology: true }, );
@@ -72,9 +73,29 @@ app.post("/LoginInfo",async (req,res)=>{
 
 
 // getting saved images
-app.get("/ImageLists",(req,res)=>{
+app.get("/ImageLists",async (req,res)=>{
+    const uid="6173897315e1bbccd6a0c4f0";
+
+    /*const new_doc=new SavedImagesModel({_id:uid,DefaultList:[
+    "https://static.generated.photos/vue-static/face-generator/landing/wall/20.jpg"]});
+
+    await new_doc.save((err,res)=>{
+        if(err)
+        {console.log(err);}
+        else
+        {
+            console.log("added");
+        }    
+    });
+*/
+    await SavedImagesModel.findOne({_id:uid},(err,doc)=>{
+        if(!err)
+        {   console.log(doc);
+            res.send(doc);
+        }
   
-    
+    }).clone().catch((err)=>{console.log(err)});
+ 
     
 })
 

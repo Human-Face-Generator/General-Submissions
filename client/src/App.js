@@ -7,6 +7,9 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Menu from "./Components/Menu";
 import GenerateMask from"./pages/GenerateMask";
+import ListImages from "./pages/ListImages";
+
+
 function App() {
   return (
     <div className="App">
@@ -19,6 +22,7 @@ function App() {
      <Route path="/signup"><Signup/></Route>
      <Route path="/login"><Login/></Route>
      <Route path="/generateMask"><GenerateMask/></Route>
+     <Route path="/listImages" render={(props)=><ListImages {...props}/>}/>
       </Switch>
 
      </Router>

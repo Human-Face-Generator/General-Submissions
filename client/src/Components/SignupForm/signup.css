@@ -1,3 +1,9 @@
+.signupHeading{
+    font-size: 120%;
+    
+}
+
+
 .formContainer{
     display:flex;
     flex-direction:column;
@@ -19,10 +25,10 @@
 .inputfield{
     display:flex;
     flex-direction:column;
-    min-height:70px;
-    
+    min-height:70px; 
     font-family:Georgia, 'Times New Roman', Times, serif;
     font-size: 15px;
+    align-items:flex-start;
     
 }
 

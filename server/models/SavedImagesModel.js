@@ -2,8 +2,9 @@ const mongoose=require("mongoose");
 
 const ImagesSchema=new mongoose.Schema({
 
-   DefaultList:Array
+   DefaultList:Array,
+   List1:Array
 });
 
-const ImagesModel=mongoose.model("ImageLists",ImagesSchema);
-module.exports=ImagesModel;
+const UserImagesModel=mongoose.model("ImageLists",ImagesSchema);
+module.exports=UserImagesModel;

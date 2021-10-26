@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.23.0",
     "bootstrap": "^5.1.3",
+    "concurrently": "^6.3.0",
     "file-saver": "^2.0.5",
     "juery": "^1.0.0",
     "mongodb": "^4.1.3",
@@ -22,8 +23,8 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "flaskserver":"cd .. && cd MaskGeneratorServer/CelebAMask && flask run",
-    "client":"react-scripts start",
+    "flaskserver": "cd .. && cd MaskGeneratorServer/CelebAMask && flask run",
+    "client": "react-scripts start",
     "start": "concurrently \"npm run flaskserver\" \"npm run  client ",
     "build": "react-scripts build",
     "test": "react-scripts test",
