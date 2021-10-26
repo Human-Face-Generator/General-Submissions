@@ -6,30 +6,18 @@ import Axios from 'axios';
 
 const SavedImages=()=>{
     
-   const [ImageLists,setLists] = useState({});
+   const [ImageLists,setLists] = useState([]);
    const history=useHistory();
 
 
-const getLists=async ()=>{
-
-    await Axios.get("http://localhost:3004/ImageLists").then((imgobj)=>{
-           
-           let tempNames=[];
-           imgobj=imgobj.data;
-           delete imgobj._id;
-           delete imgobj.__v;
-
-           console.log(imgobj);
-           setLists(imgobj);
-          console.log(Object.keys(imgobj));
-           
-    }).catch((err)=>{console.log(err)});
-
-    }
-
-
 useEffect( async()=>{
-        await getLists(); 
+
+        await Axios.get("http://localhost:3004/ImageLists").then((imgobj)=>{          
+            var data=imgobj.data.lists;// array of lists
+           console.log(data);
+            setLists(data);                 
+     }).catch((err)=>{console.log(err)});
+  
 },[])
 
     return (
@@ -42,12 +30,12 @@ useEffect( async()=>{
             </div>
 
             <div className="listNames">
-            {Object.keys(ImageLists).map((key,idx)=>{
+            {ImageLists.map((list,idx)=>{
                return (
-                  <p onClick={()=>{
-                   history.push( {pathname:"/listImages",state:{images:ImageLists[key]}} );
+                  <p id="selectedList" onClick={()=>{
+                   history.push( {pathname:"/listImages",state:{images:list}} );
                   }}>
-                  {key}
+                  {list.listName}
                   </p>
                )
             })}

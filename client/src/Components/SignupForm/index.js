@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {Button} from "react-bootstrap";
 import './signup.css';
 import checkFormInputs from "./formValidation";

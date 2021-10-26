@@ -11,6 +11,9 @@ const checkUsername=(username)=>{
     {
         errors.username="Username should consist of atleast 5 characters";
     }
+    else{
+         console.log("no errors")
+    }
     
 }
 
@@ -22,6 +25,8 @@ const checkEmail=(email)=>{
   {
     errors.email="Please enter valid email-id";
   }
+  else
+  {console.log("no errors")}
 }
 
 const checkPassword=({password,vpassword})=>{

@@ -1,21 +1,28 @@
 import React, { useState,useEffect } from "react";
+import "./index.css";
 
 const ListImages=(props)=>{
-    const [ListImages,setImages]=useState([]);
-
+    const [imgobjs,setImgobjs]=useState([]);//array of image objects
+    
     useEffect(()=>{
-        setImages(props.location.state.images);
-    },[props.location.state.images]);
+        setImgobjs(props.location.state.images.list)
+    },[props.location.state.images.list]);
 
     return (
-        <>
-          <div>
-              {ListImages.map((key,idx)=>{
+        <> 
+        <h3>{props.location.state.images.listName}</h3><br/>
+          <div className="ListContainer">
+              
+              {imgobjs.map((imgobj,idx)=>{
                   return (
-                     <p><img className="listImages" src={key}/></p>
+                      <div>
+                     <p><img className="listImages" src={imgobj.img_url}/></p>
+                     <p>{imgobj.img_name}</p>
+                     </div>
                   )
               })}
-          </div>
+
+         </div>
         </>
     );
 }

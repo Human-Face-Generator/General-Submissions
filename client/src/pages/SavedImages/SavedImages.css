@@ -12,3 +12,8 @@
     justify-content: space-around;
     font-size:150%;
 }
+
+#selectedList{
+    cursor: pointer;
+    background-color:rgb(175, 169, 169);
+}
