@@ -16,7 +16,7 @@ const SignupForm=()=>{
     const [shouldsubmit,setSubmit]=useState(false);
 
 
-    const checkfields=()=>{
+    const checkfields=async ()=>{
         
             
         var x=checkFormInputs({username,email,password,vpassword});
@@ -25,7 +25,7 @@ const SignupForm=()=>{
 
         if (JSON.stringify(x) === '{}')
         {  
-            Axios.post("http://localhost:3004/signupInfo",{username:username,
+            await Axios.post("http://localhost:3004/signupInfo",{username:username,
             email:email,password:password});
             console.log("valid signup entry");
             
