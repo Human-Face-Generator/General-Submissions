@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 
 const Imagedoc={
    img_url:String,
-   img_name:String,
+   img_name:String
 
 };
 

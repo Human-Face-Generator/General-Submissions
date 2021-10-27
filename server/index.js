@@ -67,9 +67,10 @@ app.get("/ImageLists", async (req,res)=>{
 
     const uid="6173897315e1bbccd6a0c4f0";
 
-    /*const imgdoc={
+    const imgdoc={
         img_url:"https://static.generated.photos/vue-static/face-generator/landing/wall/20.jpg",
         img_name:"random pic",
+    
 
     };
 
@@ -81,7 +82,7 @@ app.get("/ImageLists", async (req,res)=>{
         listName:"DefaultList",
          list:[imgdoc,imgdoc2]
     };
-    console.log(imgList);
+   /* console.log(imgList);
     const new_doc=new SavedImagesModel({_id:uid,
      lists:[imgList]
     });
@@ -93,8 +94,8 @@ app.get("/ImageLists", async (req,res)=>{
         {
             console.log("added");
         }    
-    });
-*/
+    });*/
+
   await SavedImagesModel.findOne({_id:uid}).then(
        (doc)=>{
         console.log(doc);
@@ -130,7 +131,7 @@ app.post("/addnewcollection",async (req,res)=>{
 
 
 // delete collection
-app.post("/deleteCollection",(req,res)=>{
+app.post("/deleteCollection",async (req,res)=>{
     const coll=req.body.collection;
     await SavedImagesModel.findByIdAndUpdate(uid,{$pull:{lists:{listName:coll}}}).
     then( result=>res.send("ok")
