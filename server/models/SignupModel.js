@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose=require("mongoose");
 const SignupSchema=new mongoose.Schema({
     username:String,
     email:String,
@@ -7,4 +7,4 @@ const SignupSchema=new mongoose.Schema({
 
 const SignupModel=mongoose.model("NewUserInfo",SignupSchema);
 
-module.exports=SignupModel;
+module.exports= SignupModel;

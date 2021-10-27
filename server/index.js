@@ -1,13 +1,13 @@
 const express=require("express");
-const app=express();
 const cors=require("cors");
 const mongoose=require("mongoose");
-const SignupModel =require("./models/SignupModel");
-const SavedImagesModel= require("./models/SavedImagesModel");
+const SignupModel=require("./models/SignupModel");
+const SavedImagesModel=require("./models/SavedImagesModel");
 
 mongoose.connect("mongodb+srv://Stark:stark123@hfg.prgke.mongodb.net/HFG?retryWrites=true&w=majority",
  { useNewUrlParser: true },{ useUnifiedTopology: true }, );
 
+const app=express();
 app.use(express.json());
 app.use(cors());
 
@@ -74,10 +74,27 @@ app.post("/LoginInfo",async (req,res)=>{
 
 // getting saved images
 app.get("/ImageLists",async (req,res)=>{
+
     const uid="6173897315e1bbccd6a0c4f0";
 
-    /*const new_doc=new SavedImagesModel({_id:uid,DefaultList:[
-    "https://static.generated.photos/vue-static/face-generator/landing/wall/20.jpg"]});
+    /*const imgdoc={
+        img_url:"https://static.generated.photos/vue-static/face-generator/landing/wall/20.jpg",
+        img_name:"random pic",
+
+    };
+
+    const imgdoc2={
+        img_url:"https://cdn.pixabay.com/photo/2021/06/04/10/28/portrait-6309448_960_720.jpg",
+        img_name:"another random pic"
+    }
+    const imgList={
+        listName:"DefaultList",
+         list:[imgdoc,imgdoc2]
+    };
+    console.log(imgList);
+    const new_doc=new SavedImagesModel({_id:uid,
+     lists:[imgList]
+    });
 
     await new_doc.save((err,res)=>{
         if(err)
@@ -86,9 +103,9 @@ app.get("/ImageLists",async (req,res)=>{
         {
             console.log("added");
         }    
-    });
-*/
-    await SavedImagesModel.findOne({_id:uid},(err,doc)=>{
+    });*/
+
+   await SavedImagesModel.findOne({_id:uid},(err,doc)=>{
         if(!err)
         {   console.log(doc);
             res.send(doc);

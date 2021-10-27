@@ -1,3 +1,11 @@
 .listImages{
-    width:20px;
+    height:300px;
+    width:200px;
+}
+
+.ListContainer{
+    display: flex;
+    flex-direction:row;
+    height: 200px;
+    justify-content: space-around;
 }
