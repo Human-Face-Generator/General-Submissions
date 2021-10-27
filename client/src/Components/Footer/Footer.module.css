@@ -1,0 +1,22 @@
+.footer {
+    background-color: #2C2C2C;
+    margin-top: 50px;
+    padding: 30px;
+}
+
+.footer-link{
+    margin: 5px ;
+    text-decoration: none;
+    color: #FFF3E4;
+}
+
+.line{
+    color: white;
+    /* margin-top: 40px; */
+    margin-right: 40px ;
+    margin-left: 40px;
+}
+
+.copyright-message-div{
+    color: white;
+}
