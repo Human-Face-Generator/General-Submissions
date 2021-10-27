@@ -1,5 +1,12 @@
-.ptag{
-    color: white ;
-    margin:  10px;
-    margin-bottom: 0rem;
+.icon{
+    height: 5%;
+    width: 5%;
+    margin-right: 10px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    text-decoration: none;
+}
+
+.link{
+    text-decoration: none;
 }

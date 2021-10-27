@@ -7,12 +7,16 @@ const Footer = ()=> {
         <div className={classes.footer}>
 
             <FooterLinks/>
+            <hr className={classes.lineone}/>
             <SocialMediaIcons/>
+
+            <div>
+              <a className={classes['footer-link2']} href="">Terms and Conditions</a> 
+              <p className={classes.ptag}>|</p>
+              <a className={classes['footer-link2']} href="">Privacy Policy</a> 
+            </div>
             
-            <a className={classes['footer-link']} href="">Terms and Conditions</a> 
-            <a className={classes['footer-link']} href="">Privacy Policy</a> 
-            
-            <hr className={classes.line}/>
+            <hr className={classes.linetwo}/>
             <div className={classes['copyright-message-div']}>
                <p>© 2021 Human-Face-Generator</p>
             </div>

@@ -1,7 +1,7 @@
 .footer {
     background-color: #2C2C2C;
     margin-top: 50px;
-    padding: 30px;
+    padding: 30px 30px 10px 30px;
 }
 
 .footer-link{
@@ -10,12 +10,35 @@
     color: #FFF3E4;
 }
 
-.line{
-    color: white;
+.footer-link2{
+    margin-left: 5px ;
+    margin-right: 5px;
+    text-decoration: none;
+    color: #7F7C82;
+    font-size: 12px;
+    margin-bottom: 0em;
+}
+
+.ptag{
+    display: inline-block;
+    color: #7F7C82;
+}
+
+.lineone{
+    color: #444941 ;
     /* margin-top: 40px; */
     margin-right: 40px ;
     margin-left: 40px;
+    
 }
+
+.linetwo{
+    color: white;
+    margin-top: 0px;
+    margin-right: 40px ;
+    margin-left: 40px;
+}
+
 
 .copyright-message-div{
     color: white;
