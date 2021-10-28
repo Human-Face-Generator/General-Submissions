@@ -5,6 +5,11 @@
     margin-left: 20px;
     margin-bottom: 20px;
     text-decoration: none;
+    transition: 0.15s;
+}
+
+.icon:hover{
+    transform: scale(1.2);
 }
 
 .link{
