@@ -10,16 +10,24 @@ const FooterLinks = () => {
             <Container fluid="xs">
                <Row>
                    <Col lg={3}>
-                      <a className={classes['footer-link']} href="">About Us</a>
+                      <div className={classes["upon-hover"]}>
+                        <a className={classes['footer-link']} href="">About Us</a>
+                      </div>
                    </Col>
                    <Col lg={3}>
-                      <a className={classes['footer-link']} href="">Contact Us</a> 
+                      <div className={classes["upon-hover"]}>
+                       <a className={classes['footer-link']} href="">Contact Us</a> 
+                      </div>
                    </Col>
                    <Col lg={3}>
-                      <a className={classes['footer-link']} href="">FAQ</a> 
+                      <div className={classes["upon-hover"]}>
+                       <a className={classes['footer-link']} href="">FAQ</a> 
+                      </div>
                    </Col>
                    <Col lg={3}>
-                       <a className={classes['footer-link']} href="">Explore Images</a>
+                       <div className={classes["upon-hover"]}>
+                        <a className={classes['footer-link']} href="">Explore Images</a>
+                       </div>
                    </Col>
                </Row>
             </Container>

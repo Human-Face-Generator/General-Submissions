@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Menu from "./Components/Menu";
 import GenerateMask from"./pages/GenerateMask";
 import ListImages from "./pages/ListImages";
+import Footer from "./Components/Footer/Footer";
 
 
 function App() {
@@ -26,7 +27,9 @@ function App() {
       </Switch>
 
      </Router>
+     <Footer/>
     </div>
+  
   );
 }
 

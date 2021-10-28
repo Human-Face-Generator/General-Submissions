@@ -7,3 +7,16 @@
 .footer-links{
     padding-top: 20px;
 }
+
+.footer-link:hover{
+    color: #D5D5D5 ;
+}
+
+.upon-hover{
+    transition: 0.15s;
+}
+
+.upon-hover:hover{
+    transform: scale(1.15);
+}
+

@@ -5,7 +5,7 @@ import { DetailsItemContent } from "./UseAreasComponents/Detail/DetailItemConten
 import {UseCaseItemBrief} from "./UseAreasComponents/Brief/useCaseItemBriefContent";
 import classes from './Index.module.css' ;
 
-import Footer from "../../Components/Footer/Footer";
+
 
 const UseAreas=()=>{
 
@@ -49,7 +49,7 @@ const UseAreas=()=>{
             ))}
          </div>
 
-         <Footer/>
+         
 
         </div>
         </>
