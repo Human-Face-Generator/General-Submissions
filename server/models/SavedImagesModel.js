@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from  "mongoose";
 // 3 level doc :)
 
 const Imagedoc={
@@ -16,5 +16,5 @@ const userListsSchema=new mongoose.Schema({
    lists:[imgListdoc]
 });
 
-const UserImagesModel=mongoose.model("ImageLists",userListsSchema);
-module.exports=UserImagesModel;
+const SavedImagesModel=mongoose.model("ImageLists",userListsSchema);
+export default SavedImagesModel;

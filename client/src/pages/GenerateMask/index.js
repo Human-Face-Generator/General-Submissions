@@ -1,9 +1,9 @@
 import './index.css';
 import classNames from './index.css'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 // import CanvasDraw from "react-canvas-draw";
 import CanvasDraw from "../../Components/CanvasDraw";
-import { saveAs } from 'file-saver';
+//import { saveAs } from 'file-saver';
 function GenerateMask() {
 
   const fetchmaskURL="http://localhost:5000/createMask";
@@ -109,7 +109,7 @@ function GenerateMask() {
         </div>
 
         <div className={classNames.tools}>
-          <input type="file" onChange={fetchmask}/>
+          <input type="file"  onChange={fetchmask}/>
           <br />
           <button
             onClick={fetchnewFace}>

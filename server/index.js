@@ -1,15 +1,18 @@
-const express=require("express");
-const cors=require("cors");
-const mongoose=require("mongoose");
-const SignupModel=require("./models/SignupModel");
-const SavedImagesModel=require("./models/SavedImagesModel");
-
-mongoose.connect("mongodb+srv://Stark:stark123@hfg.prgke.mongodb.net/HFG?retryWrites=true&w=majority",
- { useNewUrlParser: true },{ useUnifiedTopology: true }, );
+import express from "express";
+import cors from "cors";
+import  "./Connection/mongodb.js";
+import upload from "./Connection/multer_GridFS.js";
+import SignupModel from "./models/SignupModel.js";
+import SavedImagesModel from "./models/SavedImagesModel.js";
 
 const app=express();
 app.use(express.json());
 app.use(cors());
+
+
+app.post("/upload",upload.single("sampleimg"),(req,res)=>{
+    res.send("image uploaded");
+});
 
 const uid="6173897315e1bbccd6a0c4f0";
 
@@ -57,7 +60,7 @@ app.post("/LoginInfo", async (req,res)=>{
         message="An error occured";
     })       
     
-    console.log(message);    
+    console.log(message);       
       res.send(message);// error could be here
 });
 
@@ -65,9 +68,8 @@ app.post("/LoginInfo", async (req,res)=>{
 // getting saved images
 app.get("/ImageLists", async (req,res)=>{
 
-    const uid="6173897315e1bbccd6a0c4f0";
-
-    const imgdoc={
+    
+   /* const imgdoc={
         img_url:"https://static.generated.photos/vue-static/face-generator/landing/wall/20.jpg",
         img_name:"random pic",
     
@@ -82,7 +84,7 @@ app.get("/ImageLists", async (req,res)=>{
         listName:"DefaultList",
          list:[imgdoc,imgdoc2]
     };
-   /* console.log(imgList);
+   console.log(imgList);
     const new_doc=new SavedImagesModel({_id:uid,
      lists:[imgList]
     });
@@ -94,8 +96,8 @@ app.get("/ImageLists", async (req,res)=>{
         {
             console.log("added");
         }    
-    });*/
-
+    });
+*/
   await SavedImagesModel.findOne({_id:uid}).then(
        (doc)=>{
         console.log(doc);
