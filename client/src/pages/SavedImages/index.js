@@ -20,7 +20,7 @@ const SavedImages=()=>{
       Axios.post("http://localhost:3004/addnewcollection",{collName:newCollname}).then(
          (res)=>{
             console.log(res.data)
-            if(res.data==="ok")
+            if(res.data==="new doc added" || res.data==="doc updated")
             {   
                  setaddlist(!addlist);
             }
@@ -41,10 +41,15 @@ const SavedImages=()=>{
 
 useEffect( ()=>{
 
-         Axios.get("http://localhost:3004/ImageLists").then((imgobj)=>{          
-            var data=imgobj.data.lists;// array of lists
+         Axios.get("http://localhost:3004/ImageLists").then((imgobj)=>{ 
+            if(imgobj.data==="Empty List")  
+            {
+                  console.log(imgobj.data);
+            }    
+            else   
+         {var data=imgobj.data.lists;// array of lists
            console.log(data);
-            setLists(data);                 
+            setLists(data); }                
      }).catch((err)=>{console.log(err)});
   
 },[addlist,colldeleted])
@@ -60,9 +65,9 @@ useEffect( ()=>{
            
             <div className="listNames">
              <h1>Your Gallery</h1><br/>
-            {ImageLists.map((list,idx)=>{
+            { ImageLists && ImageLists.map((list,idx)=>{
                return (
-                  <div className="listItem">
+                  <div className="listItem" key={idx}>
                   <p id="selectedList" onClick={()=>{
                    history.push( {pathname:"/listImages",state:{images:list}} );
                   }}>

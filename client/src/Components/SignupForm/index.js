@@ -15,24 +15,25 @@ const SignupForm=()=>{
     const [errors,setErrors]=useState({});
     const [shouldsubmit,setSubmit]=useState(false);
 
-
     const checkfields=async ()=>{
-        
-            
+                    
         var x=checkFormInputs({username,email,password,vpassword});
 
         setErrors(x);   
-
-        if (JSON.stringify(x) === '{}')
+        console.log(x)
+        if (x && Object.keys(x).length === 0)           
         {  
             await Axios.post("http://localhost:3004/signupInfo",{username:username,
-            email:email,password:password});
-            console.log("valid signup entry");
-            
-           setSubmit(true);           
+            email:email,password:password}).
+            then( ()=>{
+                console.log("valid signup entry");
+                setSubmit(true);
+            }).
+            catch(err=>console.log(err))
+                          
         } 
         else
-        {console.log(errors);}
+        {console.log(x);}
      
 
     }

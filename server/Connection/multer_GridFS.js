@@ -4,15 +4,19 @@ import multer from "multer";
 import {GridFsStorage} from "multer-gridfs-storage";
 import Grid from "gridfs-stream";
 import mongoose from "mongoose";
-const mongoURI="mongodb+srv://Stark:stark123@hfg.prgke.mongodb.net/HFG?retryWrites=true&w=majority";
+const uid="6173897315e1bbccd6a0c4f0";
 
+const mongoURI="mongodb+srv://Stark:stark123@hfg.prgke.mongodb.net/HFG?retryWrites=true&w=majority";
                          
 // connection for gfs
-const conn=mongoose.createConnection(mongoURI);
+const conn=mongoose.createConnection(mongoURI,{ useNewUrlParser: true, useUnifiedTopology: true });
 let gfs;//init gfs
-conn.once('open',()=>{
+let gridFSBucket;
+conn.once('open',()=>{ // fxn that once connection with db is done then do this
     //init stream
     gfs=Grid(conn.db,mongoose.mongo);
+   gridFSBucket = new mongoose.mongo.GridFSBucket(conn.db,{bucketName:"uploads"});
+    
     gfs.collection("uploads");
 })
 
@@ -29,7 +33,7 @@ const storage = new GridFsStorage({
           const filename = buf.toString('hex') + path.extname(file.originalname);
           const fileInfo = {
             filename: filename,
-            bucketName: 'uploads'
+            bucketName:"uploads" // same as collection name
           };
           resolve(fileInfo);
         });
@@ -38,4 +42,4 @@ const storage = new GridFsStorage({
   });
 const upload = multer({ storage });
 
-export default upload;
+export {upload,gfs,gridFSBucket};
