@@ -43,3 +43,13 @@
     color:white;   
 }
 
+.deleteImgIcon{
+    margin-top:4%;
+    height:60%;
+    cursor: pointer;
+}
+
+.deleteImgIcon:hover{
+    height:70%;
+}
+

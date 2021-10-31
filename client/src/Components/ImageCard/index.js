@@ -3,6 +3,7 @@ import  "./index.css";
 import addList from "./images/addList.png";
 import { Dropdown } from "react-bootstrap";
 import Axios from "axios";
+import deleteIcon from "../../pages/SavedImages/images/deleteIcon.png";
 
 const ImageCard=(props)=>{
 
@@ -29,11 +30,17 @@ const ImageCard=(props)=>{
         await Axios.post("http://localhost:3004/removeImage",postData).then((res)=>{
            console.log(res);
            props.setToggling(!props.listToggle);// re-rendering the list of images
-        }).catch((err)=>{console.log(err)});
-
-       
+        }).catch((err)=>{console.log(err)});     
     }
+    
+    const deleteImage=async ()=>{
+        const postData={collName:currlist,imgName:currImgName,imgURL:filename};
 
+        await Axios.post("http://localhost:3004/removeImage",postData).then((res)=>{
+            console.log(res);
+            props.setToggling(!props.listToggle);// re-rendering the list of images
+         }).catch((err)=>{console.log(err)}); 
+    }
 
     useEffect(()=>{
         seturl(props.img_url);
@@ -73,6 +80,10 @@ const ImageCard=(props)=>{
          </Dropdown.Menu>
 
        </Dropdown>
+       
+         <img className="deleteImgIcon" src={deleteIcon} 
+              onClick={async()=>await deleteImage()}
+         />
         
         </div>
         </div>

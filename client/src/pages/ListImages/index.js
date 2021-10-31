@@ -35,6 +35,7 @@ const ListImages=(props)=>{
 
     return (
         <> 
+        <div className="collImages">
         <p className="listName">{currentList}</p><br/>
           <div className="ListContainer">
               
@@ -59,7 +60,7 @@ const ListImages=(props)=>{
          </div>
          <input type="file" name="sampleimg" onChange={(e)=>setfile(e.target.files[0])}/>
 <button onClick={()=>sendfile()}>send</button>
-
+       </div>
         </>
     );
 }
