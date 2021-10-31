@@ -49,7 +49,7 @@ useEffect( ()=>{
             }    
             else   
          {var data=imgobj.data.lists;// array of lists
-           console.log(data);
+          // console.log(data);
            let names=[];
    data.map(list=>names.push(list.listName));
            setNames(names);

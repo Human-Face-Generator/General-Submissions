@@ -48,13 +48,13 @@ const checkLoginData=async ({req,res})=>{
         message="An error occured";
     })       
     
-    console.log(message);       
+    //console.log(message);       
       res.send(message);// error could be here
 }
 
 const addCollection=async({req,res})=>{
     const collName=req.body.collName;
-    console.log(req.body)
+   // console.log(req.body)
     const newColl={
         listName:collName,
         list:[]
@@ -101,7 +101,7 @@ const getImages=async ({req,res})=>{
     await SavedImagesModel.findOne({_id:uid}).then(
         (doc)=>{ 
             if(doc)     
-         {console.log(doc);
+         {//console.log(doc);
         res.send(doc);}
         else
         {
@@ -125,7 +125,7 @@ const uploadTodb=async ({req,res})=>{
 }
 
 const showImage=async ({res,imgurl})=>{
-    console.log(imgurl);
+   // console.log(imgurl);
   
        await gfs.files.findOne({filename:imgurl}).
         then((file)=>{
@@ -142,9 +142,47 @@ const showImage=async ({res,imgurl})=>{
         ).catch((err)=>{console.log(err)})
 }
 
+const addNewImage=async ({req,res})=>{
+    const collName=req.body.collName;
+    const imgURL=req.body.imgURL;
+    const imgName=req.body.imgName;
 
+    const new_img={img_name:imgName,img_url:imgURL};
+    const query= {$push:{'lists.$.list':new_img}};
 
+    await SavedImagesModel.updateOne({_id:uid,'lists.listName':collName},
+       query).then(
+        ()=>{
+            res.send("image added to new collection successfuly");
+        }
+    ).catch((err)=>{console.log(err)})
 
+}
+
+const deleteImage=async ({req,res})=>{
+    const collName=req.body.collName;
+    const imgURL=req.body.imgURL;
+    const imgName=req.body.imgName;
+
+    const img={img_name:imgName,img_url:imgURL};
+    const query= {$pull:{'lists.$.list':img}};
+
+    await SavedImagesModel.updateOne({_id:uid,'lists.listName':collName},
+       query).then(
+        ()=>{
+            res.send("image removed from current collection successfuly");
+        }
+    ).catch((err)=>{console.log(err)})
+
+}
+
+const CollectionList=async ({collName,res})=>{
+    await SavedImagesModel.findOne({_id:uid,'lists.listName':collName},"lists.$").then(
+     (obj)=>{
+         res.send(obj.lists[0]);
+     }
+    ).catch(err=>console.log(err))
+}
 
 // adding New User info to database
 app.post("/signupInfo",async (req,res)=>{
@@ -167,6 +205,16 @@ app.post("/deleteCollection",async (req,res)=>{
       await deleteCollection({req,res});
 });
 
+// adding new image to collection
+app.post("/addImage",async (req,res)=>{
+     await addNewImage({req,res});
+})
+
+// remove image from collection
+app.post("/removeImage",async (req,res)=>{
+    await deleteImage({req,res});
+})
+
 // getting saved images
 app.get("/ImageLists", async (req,res)=>{
     await getImages({req,res});  
@@ -183,6 +231,11 @@ app.get("/obtain-images/:filename",async (req,res)=>{
     await showImage({res,imgurl});  
 })
 
+// obtain collection imageslist
+app.get("/collection-imageList/:collname",async (req,res)=>{
+    const collName=req.params.collname;
+    await CollectionList({collName,res});
+})
 
 app.listen(3004,()=>{
     console.log("Server running at 3004");
