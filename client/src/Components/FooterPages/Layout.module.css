@@ -1,0 +1,19 @@
+.detail-items{
+    margin-top: 2rem;
+    margin-left: 10%;
+    margin-right: 10%;
+    /* margin-top: 5%; */
+    padding: 20px ;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px;
+    /* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
+}
+
+ul{
+  list-style-type: none;
+  text-align: center;
+}
+
+.mail{
+    text-decoration: none;
+    color: #2F86A6;
+}
