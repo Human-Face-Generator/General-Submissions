@@ -8,6 +8,7 @@ import deleteIcon from "./images/deleteIcon.png";
 const SavedImages=()=>{
     
    const [ImageLists,setLists] = useState([]);
+   const [listNames,setNames]=useState([]);// for next page, to avoid another call to db
    const [addlist,setaddlist]=useState(false);
    const [newCollname,setcollname]=useState("");
    const [colldeleted,setdelstatus]=useState(false);
@@ -49,6 +50,10 @@ useEffect( ()=>{
             else   
          {var data=imgobj.data.lists;// array of lists
            console.log(data);
+           let names=[];
+   data.map(list=>names.push(list.listName));
+           setNames(names);
+        
             setLists(data); }                
      }).catch((err)=>{console.log(err)});
   
@@ -69,7 +74,7 @@ useEffect( ()=>{
                return (
                   <div className="listItem" key={idx}>
                   <p id="selectedList" onClick={()=>{
-                   history.push( {pathname:"/listImages",state:{images:list}} );
+            history.push( {pathname:"/listImages",state:{images:list,allListNames:listNames}} );
                   }}>
                   {list.listName}
                   </p>

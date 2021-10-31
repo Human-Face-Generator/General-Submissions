@@ -53,6 +53,9 @@
     height:40px;
     cursor: pointer;
 }
+/* .deleteicon:hover{
+    height:50px;
+} */
 .listNames,.newlist{
     display: flex;
     flex-direction:column;
