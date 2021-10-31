@@ -1,18 +1,23 @@
 import React, { useState,useEffect } from "react";
 import "./index.css";
 import Axios from "axios";
+import ImageCard from "../../Components/ImageCard";
+
 const ListImages=(props)=>{
     const [imgobjs,setImgobjs]=useState([]);//array of image objects   
-//     const [file,setfile]=useState(null);
+    const [file,setfile]=useState(null);
+    const currentList=props.location.state.images.listName;
+   const allListNames=props.location.state.allListNames;
+   
 
-// const sendfile=async()=>{
-//     const formdata = new FormData();
-//     formdata.append("sampleimg",file);
-//     console.log(formdata);
+  const sendfile=async()=>{
+    const formdata = new FormData();
+    formdata.append("sampleimg",file);
+    console.log(formdata);
 
-//    await Axios.post("http://localhost:3004/upload",formdata).then((res)=>console.log(res))
+   await Axios.post("http://localhost:3004/upload",formdata).then((res)=>console.log(res)).catch(err=>console.log(err))
 
-// }
+}
 
     useEffect(async()=>{
         const imglist=props.location.state.images.list;
@@ -22,21 +27,27 @@ const ListImages=(props)=>{
 
     return (
         <> 
-        <h3>{props.location.state.images.listName}</h3><br/>
+        <p className="listName">{currentList}</p><br/>
           <div className="ListContainer">
               
               {imgobjs && imgobjs.map((imgobj,idx)=>{
                   return (
                       <div key={idx}>
-                     <p><img className="listImages" src={`http://localhost:3004/obtain-images/${imgobj.img_url}`}/></p>
-                     <p>{imgobj.img_name}</p>
+
+                          <ImageCard 
+                          img_url={`http://localhost:3004/obtain-images/${imgobj.img_url}`}
+                          img_name={imgobj.img_name}
+                          currlist={currentList}
+                          listNames={allListNames}
+                          />
+
                      </div>
                   )
               })}
  
          </div>
-         {/* <input type="file" name="sampleimg" onChange={(e)=>setfile(e.target.files[0])}/>
-<button onClick={()=>sendfile()}>send</button> */}
+         <input type="file" name="sampleimg" onChange={(e)=>console.log(e.target.files[0])}/>
+<button onClick={()=>sendfile()}>send</button>
 
         </>
     );

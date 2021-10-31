@@ -78,14 +78,14 @@ const addCollection=async({req,res})=>{
        {
          
    //if user doc already exists
-    await SavedImagesModel.findByIdAndUpdate(uid,{$push:{lists:newColl}}).then(
-       (result)=>{
-           res.send("doc updated");
+    await SavedImagesModel.findByIdAndUpdate(uid,{$push:{lists:newColl}}).
+    then((result)=>{
+     res.send("doc updated");}).
+       catch((err)=>{console.log(err)});
+
        }
-   ).catch((err)=>{console.log(err)})
-       }
-   }
-   ).catch(err=>console.log(err))
+   }).
+   catch(err=>console.log(err))
   
 }
 
@@ -180,8 +180,7 @@ app.post("/upload",upload.single("sampleimg"),async (req,res)=>{
 //display requested image
 app.get("/obtain-images/:filename",async (req,res)=>{
     const imgurl=req.params.filename;
-    await showImage({res,imgurl});
-    
+    await showImage({res,imgurl});  
 })
 
 

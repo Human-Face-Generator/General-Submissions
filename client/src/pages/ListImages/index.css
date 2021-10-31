@@ -1,11 +1,15 @@
-.listImages{
-    height:300px;
-    width:200px;
+.listName{
+    padding:1%;
+    margin:1% auto;
+    width:90%;
+    font-size: 150%;
+    color:white;
+    background-color:rgb(126, 90, 245);
+    font-family: cursive;
 }
-
 .ListContainer{
     display: flex;
     flex-direction:row;
-    height: 200px;
+    min-height: 300px;
     justify-content: space-around;
 }
