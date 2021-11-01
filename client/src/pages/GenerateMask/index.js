@@ -1,5 +1,6 @@
 import './index.css';
-import classNames from './index.css'
+import classNames from './index.css' ;
+import classes from './Mask.module.css' ;
 import { useState } from 'react';
 // import CanvasDraw from "react-canvas-draw";
 import CanvasDraw from "../../Components/CanvasDraw";
@@ -98,31 +99,46 @@ function GenerateMask() {
   return (
     <div className="App">
 
-      <div>
-        <h1>React Canvas Draw</h1>
+      <div className={classes['main-box']}>
+        <h2>React Canvas Draw</h2>
 
-        <div>
-          <button onClick={fetchrandomFace}>
-            random image
+        <div className={classes.randomimage}>
+          <button className={classes.btn} onClick={fetchrandomFace}>
+            Random Image
           </button>
           {randimage?<img src={randimage} alt={"no image"} />:null}
         </div>
 
         <div className={classNames.tools}>
-          <input type="file"  onChange={fetchmask}/>
+          <input  
+            type="file"  
+            onChange={fetchmask}
+            className={classes['choose-file']}
+          />
           <br />
-          <button
-            onClick={fetchnewFace}>
+          <div className={classes.options}>
+          <button 
+            className={classes.btn}
+            onClick={fetchnewFace}
+          >
             Save
           </button>
-          <button onClick={() => {saveableCanvas.clear();}} >
+
+          <button 
+            className={classes.btn} 
+            onClick={() => {saveableCanvas.clear();}} 
+          >
             Clear
           </button>
-          <button onClick={() => {saveableCanvas.undo(); }} >
+
+          <button 
+            className={classes.btn} 
+            onClick={() => {saveableCanvas.undo(); }} 
+          >
             Undo
           </button>
 
-          <select id="color" onChange={(e) => {
+          <select className={classes.btn} id="color" onChange={(e) => {
             setState({ ...state, color: e.target.value })
           }}>
             <option value="#000000">background</option>
@@ -145,10 +161,12 @@ function GenerateMask() {
             <option value="#ff9933">neck</option>
             <option value="#00cc00">cloth</option>
           </select>
+          </div>
 
           <div>
-            <label>Brush-Radius:</label>
+            <label className={classes.inputlabel}>Brush-Radius :</label>
             <input
+              className={classes.inputbox}
               type="number"
               value={state.brushRadius}
               onChange={e =>
@@ -157,8 +175,9 @@ function GenerateMask() {
             />
           </div>
           <div>
-            <label>Lazy-Radius:</label>
+            <label className={classes.inputlabel}> Lazy-Radius :</label>
             <input
+              className={classes.inputbox}
               type="number"
               value={state.lazyRadius}
               onChange={e =>
@@ -167,6 +186,7 @@ function GenerateMask() {
             />
           </div>
         </div>
+
         <img src={orimage} height="200" />
         <CanvasDraw
           ref={canvasDraw => (saveableCanvas = canvasDraw)}
