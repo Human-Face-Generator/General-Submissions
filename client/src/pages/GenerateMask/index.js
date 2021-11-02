@@ -4,12 +4,14 @@ import classes from './Mask.module.css' ;
 import { useState } from 'react';
 // import CanvasDraw from "react-canvas-draw";
 import CanvasDraw from "../../Components/CanvasDraw";
-//import { saveAs } from 'file-saver';
+import { saveAs } from 'file-saver';
+import axios from 'axios';
+
 function GenerateMask() {
 
   const fetchmaskURL="http://localhost:5000/createMask";
   const createFaceURL="http://localhost:5000/createFace";
-  const fetchrandomFaceURL="http://36a9-34-71-167-105.ngrok.io/";
+  const fetchrandomFaceURL="http://799f-35-193-108-70.ngrok.io";
   
   const defaultProps = {
     onChange: null,
@@ -54,6 +56,22 @@ function GenerateMask() {
     
     localStorage.setItem("randomface", window.URL.createObjectURL(res));
     setrandimage(localStorage.getItem("randomface"))
+  }
+
+  const fetchrandomFacezip=async(e)=>{
+    const method = 'GET';
+
+    const url = fetchrandomFaceURL+"/zip"
+
+    fetch(url)
+       .then(res=>res.blob())  
+      .then((data ) => {
+        console.log("succesful")
+          saveAs(data,"randomFaceZip.zip")
+
+      }).catch((err)=>{console.log(err)});
+    
+
   }
  
   const fetchmask=async(event)=>{
@@ -108,7 +126,13 @@ function GenerateMask() {
           </button>
           {randimage?<img src={randimage} alt={"no image"} />:null}
         </div>
-
+        <div className={classes.randomimage}>
+          <button className={classes.btn} onClick={fetchrandomFacezip}>
+              Download 10 Random images
+          </button>
+          {/* {randimage?<img src={randimage} alt={"no image"} />:null} */}
+        </div>
+        
         <div className={classNames.tools}>
           <input  
             type="file"  
