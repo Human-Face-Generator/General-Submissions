@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap');
+
+.bg {
+    background-color: #2C2C2C !important; 
+    /* background-color: #2f2626 !important; */
+    padding-top: 25px !important;
+    padding-bottom: 25px !important;
+}
+
+.link{
+    color: whitesmoke !important;
+    margin-left: 20px !important;
+    margin-right: 20px !important;
+    transition: 0.15s;
+}
+
+.link:hover{
+    /* color: #1C1427 !important;
+    background-color: #6E7C7C !important; */
+    color: white !important;
+    background-color:	#404040 !important;
+    transform: scale(1.05);
+}
+
+.link:focus{
+    color: white !important;
+    background-color:	#404040 !important;
+}
+
+.home{
+    font-size: 30px ;
+    margin-left: 20px;
+    margin-right: 10px; 
+    color: aliceblue !important;
+    font-family: 'Bubblegum Sans', cursive;
+    transition: 0.15s;
+}
+
+.home:hover{
+    color:  #E8E8E8 !important;
+    background-color:	#404040 !important;
+    transform: scale(1.05);
+}
+
+.home:focus{
+    color:  #E8E8E8 !important;
+    background-color:	#404040 !important;
+}
+
+.toggle-icon{
+    background-color: #E8E8E8 !important;
+    color: #343A40 !important;
+}
