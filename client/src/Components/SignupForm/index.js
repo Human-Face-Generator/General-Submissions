@@ -13,6 +13,7 @@ const SignupForm=()=>{
     const [password,setPassword]=useState("");
     const [vpassword,setVpassword]=useState("");
     const [errors,setErrors]=useState({});
+    const [mailsent,setMailstatus]=useState(false);
     const [shouldsubmit,setSubmit]=useState(false);
 
     const checkfields=async ()=>{
@@ -24,10 +25,18 @@ const SignupForm=()=>{
         if (x && Object.keys(x).length === 0)           
         {  
             await Axios.post("http://localhost:3004/signupInfo",{username:username,
-            email:email,password:password}).
-            then( ()=>{
-                console.log("valid signup entry");
-                setSubmit(true);
+            email:email,password:password}).then( (res)=>{
+           //console.log(res)
+            if(res.data === "User with this email-id already exists!")
+                {  
+                    setErrors({email:res.data});
+                }
+            else if(res.data === "email sent successfully") 
+            {       console.log("email sent")
+                   setMailstatus(true);
+            }  
+                //console.log("valid signup entry");
+                //setSubmit(true);
             }).
             catch(err=>console.log(err))
                           
@@ -61,7 +70,7 @@ const SignupForm=()=>{
                  onChange={(e)=>{setUsername(e.target.value) }} 
                  
                 />
-                {errors.username && <p> {errors.username} </p>}
+                {errors.username && <p className="signupErrors"> {errors.username} </p>}
             </div>
 
             <div className="inputfield">
@@ -74,7 +83,7 @@ const SignupForm=()=>{
                  value={email} 
                  onChange={(e)=>{setEmail(e.target.value)}}  
                 />
-                {errors.email && <p>{errors.email}</p>}
+                {errors.email && <p className="signupErrors">{errors.email}</p>}
             </div>
 
             <div className="inputfield">
@@ -87,7 +96,7 @@ const SignupForm=()=>{
                  value={password}   
                  onChange={(e)=>{setPassword(e.target.value)}}
                 />
-                {errors.password && <p>{errors.password}</p>}
+                {errors.password && <p className="signupErrors">{errors.password}</p>}
             </div>
 
             <div className="inputfield">
@@ -100,14 +109,14 @@ const SignupForm=()=>{
                  value={vpassword}  
                  onChange={(e)=>{setVpassword(e.target.value)}}
                 />
-                {errors.vpassword && <p>{errors.vpassword}</p>}
+                {errors.vpassword && <p className="signupErrors">{errors.vpassword}</p>}
             </div>
        <br/>
-
-        <Button className="signupbtn" variant="primary" size="sm"
+       {!mailsent?<Button className="signupbtn" variant="primary" size="sm"
         onClick={checkfields} >
         Signup
-        </Button>
+        </Button>:<p>We have sent an email with a confirmation link to your email address. In order to complete the sign-up process, please click the confirmation link.<br/><br/>
+If you do not receive a confirmation email, please check your spam folder.<br/> Also, please verify that you entered a valid email address in our sign-up form.</p> }
        
          {shouldsubmit && <Redirect to="/"/>}
         </form>

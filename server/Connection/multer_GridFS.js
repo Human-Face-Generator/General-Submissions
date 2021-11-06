@@ -4,10 +4,12 @@ import multer from "multer";
 import {GridFsStorage} from "multer-gridfs-storage";
 import Grid from "gridfs-stream";
 import mongoose from "mongoose";
-const uid="6173897315e1bbccd6a0c4f0";
+const mongoUsername=process.env.DB_USER;
+const mongoPassword=process.env.DB_PASS;
+const mongoURI=`mongodb+srv://${mongoUsername}:${mongoPassword}@hfg.prgke.mongodb.net/HFG?retryWrites=true&w=majority`;
 
-const mongoURI="mongodb+srv://Stark:stark123@hfg.prgke.mongodb.net/HFG?retryWrites=true&w=majority";
-                         
+
+const uid="6173897315e1bbccd6a0c4f0";
 // connection for gfs
 const conn=mongoose.createConnection(mongoURI,{ useNewUrlParser: true, useUnifiedTopology: true });
 let gfs;//init gfs

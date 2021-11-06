@@ -46,3 +46,7 @@
 .signupbtn{
     width:80%;
 }
+
+.signupErrors{
+    color:red;
+}

@@ -1,2 +1,5 @@
 /MaskGeneratorServer/CelebAMask/MaskGAN_demo/checkpoints
 /server/node_modules
+
+
+/server/.env
