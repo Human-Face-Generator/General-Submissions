@@ -20,7 +20,7 @@ function App() {
     <div className="App">
     
       <Router>
-       <Menu/><hr/>
+       <Menu/>
        <Switch>
         <Route exact path="/"><Home/></Route>
         <Route path="/Uses"><UseAreas/></Route>
