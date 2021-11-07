@@ -15,6 +15,7 @@ const SavedImages=()=>{
    const history=useHistory();
    const UserID=localStorage.getItem('UserID');
    console.log(UserID);
+   
    const addCollName= ()=>{
 
       console.log("coll name obtained");

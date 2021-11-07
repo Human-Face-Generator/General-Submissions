@@ -34,7 +34,11 @@ const SignupForm=()=>{
             else if(res.data === "email sent successfully") 
             {       console.log("email sent")
                    setMailstatus(true);
-            }  
+            } 
+            if(res.data === "Hey, you have not confirmed your account. Click here to retry")
+            {
+               
+            } 
                 //console.log("valid signup entry");
                 //setSubmit(true);
             }).
@@ -46,7 +50,11 @@ const SignupForm=()=>{
      
 
     }
-
+      const fxn=()=>{
+           
+          setTimeout(()=>{return false;},1000);
+          return true;
+      }
     
    return (
        <>
@@ -115,8 +123,11 @@ const SignupForm=()=>{
        {!mailsent?<Button className="signupbtn" variant="primary" size="sm"
         onClick={checkfields} >
         Signup
-        </Button>:<p>We have sent an email with a confirmation link to your email address. In order to complete the sign-up process, please click the confirmation link.<br/><br/>
-If you do not receive a confirmation email, please check your spam folder.<br/> Also, please verify that you entered a valid email address in our sign-up form.</p> }
+        </Button>:<div>
+            <p>We have sent an email with a confirmation link to your email address. In order to complete the sign-up process, please click the confirmation link. Link will be valid for only <b>10 minutes</b>.<br/><br/>
+If you do not receive a confirmation email, please check your spam folder.<br/> Also, please ensure that you have entered a valid email address in our sign-up form.</p>
+  <Button disabled={fxn()}>Resend link</Button>
+ </div>}
        
          {shouldsubmit && <Redirect to="/"/>}
         </form>

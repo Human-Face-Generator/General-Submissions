@@ -33,7 +33,7 @@ const addNewUser=async ({req,res})=>{
     const email=req.body.email;
     const password=req.body.password;
     var exit=false;
-    const user= await SignupModel.findOne({email});  
+    var user= await SignupModel.findOne({email});  
      if(user)
       {  exit=true;
           res.send("User with this email-id already exists!");        
@@ -60,7 +60,7 @@ const addNewUser=async ({req,res})=>{
       Please Click ${link} to verify your account `;
 
     var mailResponse= await sendEmail(email,"Please verify your Email-account",message);
-    //console.log(mailResponse)
+    console.log(mailResponse)
     if(mailResponse === "email sent successfully")
     {       //console.log("hello")
         res.send(mailResponse);
@@ -69,14 +69,15 @@ const addNewUser=async ({req,res})=>{
     if(mailResponse === "email sent successfully")
     {       //console.log("hello from here also")
          setTimeout(async ()=>{
-              if(newUser.status === 'pending')
-              {
+             user=await SignupModel.findOne({_id:newUser._id});// obtaining doc again from db
+              if(user.status === 'pending')
+              {   console.log("user deleted")
                 await tokenModel.deleteOne({_id:OTtoken._id});
-                await SignupModel.deleteOne({_id:newUser._id});
-                res.send("You have ")
+                await SignupModel.deleteOne({_id:user._id});
+                //res.send("Hey, you have not confirmed your account. Click here to retry")
               }
-         },600000)
-    }
+         },5*60000)
+    } 
     else
     {
         res.send("Something went wrong, please try again");
@@ -94,22 +95,19 @@ const checkLoginData=async ({req,res})=>{
     const email=req.body.email;
     const password=req.body.password;
     var message=""; 
-
-    await SignupModel.find({email:email},{password:1}).then(
-        async (result)=>{
-            //console.log(result);
-            if(result.length === 0)
-            {  
-                message="Please enter a valid email-id";
-            }
-        else if( result.length >= 1)
-            {
-                const hashedPassword=result[0].password;
+    var uid="";
+    try
+   {
+       const user= await SignupModel.findOne({email:email},{password:1,_id:1});
+    if(user)
+    {
+        const hashedPassword=user.password;
                await bcrypt.compare(password,hashedPassword).then(
                    response=>{
                        if(response)
                        {
                         message="Valid User";  
+                        uid=user._id;
                        }
                         else
                         { 
@@ -117,15 +115,18 @@ const checkLoginData=async ({req,res})=>{
                         }
                    }
                )
-                          
-            }      
-        }
-    ).catch((err)=>{
-        message="An error occured";
-    })       
-    
+    }
+    else
+    {
+       message="Please enter a valid email-id";
+    }        
     //console.log(message);       
-      res.send(message);// error could be here
+      res.send({message,uid});// error could be here}
+}
+      catch(err)
+      {
+          res.send(err)
+      }
 }
 
 const addCollection=async({req,res})=>{
@@ -334,9 +335,8 @@ app.get("/user-verification/:uid/:token",async (req,res)=>{
         {   user.status="active";
            await user.save();
            await tokenModel.deleteOne({_id:checkToken._id});
-           
-            res.redirect(`http://localhost:3000/user/${user._id}`)
             
+            res.redirect(`http://localhost:3000/user/${user._id}`);
         }
     }
 })

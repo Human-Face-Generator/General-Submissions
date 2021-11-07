@@ -3,7 +3,7 @@ import {Link,Redirect} from 'react-router-dom';
 import {useState} from 'react';
 import Axios from "axios";
 
-const Login=()=>{
+const Login=(props)=>{
 
     const [email,setEmail]=useState("");
     const [password,setPassword]=useState("");
@@ -16,16 +16,19 @@ const Login=()=>{
             console.log("In checkuser fxn");
             console.log(res.data);
 
-            if(res.data==="Valid User")
-            { 
+            if(res.data.message === "Valid User")
+            {      
+                 localStorage.setItem("UserID",res.data.uid);
+            console.log(localStorage.getItem("UserID"))
+            (props.location.state.setCurrUser(res.data.uid))
                  setValidity(true);
             }
             else 
             { 
-                setErrors(res.data);  
+                setErrors(res.data.message);  
             }
       
-        })
+        }).catch((err)=>{console.log(err)});
     }
 
     return (
@@ -65,7 +68,7 @@ const Login=()=>{
          </form>
 
          <br/>
-         {errors && <p>{errors}<br/></p> }
+         {errors && <p className="signupErrors">{errors}<br/></p> }
          {validUser && <Redirect to="/"></Redirect>   }
          <p>Not registered yet? <Link to="/Signup"> Create an Account</Link> </p>
         </div>

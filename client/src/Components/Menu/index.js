@@ -1,10 +1,24 @@
-import React from "react";
+import React, { useEffect,useState } from "react";
 import { Nav,Navbar} from "react-bootstrap";
 import {Link} from 'react-router-dom';
 import './menu.css';
 import classes from './Menu.module.css' ;
 
-const Menu=()=>{
+const Menu=(props)=>{
+     
+   const [user,setCurrUser]=useState(localStorage.getItem("UserID"));
+    //console.log(!localStorage.getItem('UserID'))
+ 
+    const logoutUser= ()=>{
+     localStorage.removeItem('UserID');
+     setCurrUser(null);
+    }
+    
+    const fxn=()=>{
+      console.log("in login")
+    }
+     useEffect(()=>setCurrUser(localStorage.getItem('UserID')),
+     props.uid);
 
     return (
         <>
@@ -20,9 +34,13 @@ const Menu=()=>{
              <Nav.Link className={classes.link} as={Link} to="/account-images">
               Saved Images
              </Nav.Link>
-             <Nav.Link className={classes.link} as={Link} to="/login">
+            {!user?<Nav.Link className={classes.link} as={Link} to={{pathname:"/login",state:{setCurrUser}}} >
               Login
-             </Nav.Link>
+             </Nav.Link>:
+             <Nav.Link className={classes.link} onClick={()=>logoutUser()} as={Link} to="/">
+             Logout
+            </Nav.Link>
+             } 
             </Nav>
           </Navbar.Collapse>
 
