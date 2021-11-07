@@ -13,7 +13,7 @@ import About from "./Components/FooterPages/About";
 import Contact from "./Components/FooterPages/Contact";
 import FAQ from "./Components/FooterPages/FAQ";
 import ExploreImages from "./Components/FooterPages/ExploreImages";
-
+import User from "./pages/User";
 
 function App() {
   return (
@@ -24,6 +24,7 @@ function App() {
        <Switch>
         <Route exact path="/"><Home/></Route>
         <Route path="/Uses"><UseAreas/></Route>
+        <Route path="/user/:uid"><User/></Route>
         <Route path="/account-images"><SavedImages/></Route>
         <Route path="/signup"><Signup/></Route>
         <Route path="/login"><Login/></Route>
