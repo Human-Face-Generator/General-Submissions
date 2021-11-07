@@ -334,7 +334,9 @@ app.get("/user-verification/:uid/:token",async (req,res)=>{
         {   user.status="active";
            await user.save();
            await tokenModel.deleteOne({_id:checkToken._id});
-            res.send("You have successfully verified your account.\nYou can now close this page.")
+           
+            res.redirect(`http://localhost:3000/user/${user._id}`)
+            
         }
     }
 })

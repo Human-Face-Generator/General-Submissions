@@ -10,7 +10,8 @@ const ListImages=(props)=>{
     // hence imgobjs needs to be updated
     const currentList=props.location.state.images.listName;
    const allListNames=props.location.state.allListNames;
-   
+   const UserID=localStorage.getItem('UserID');
+   console.log(UserID);
 
   const sendfile=async()=>{
     const formdata = new FormData();
