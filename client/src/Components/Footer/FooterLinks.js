@@ -30,7 +30,7 @@ const FooterLinks = () => {
                    </Col>
                    <Col lg={3}>
                        <div className={classes["upon-hover"]}>
-                        <Link className={classes['footer-link']} to="/explore-images">Explore Images</Link>
+                        <Link className={classes['footer-link']} to="/explore-images">Browse Images</Link>
                        </div>
                    </Col>
                </Row>
