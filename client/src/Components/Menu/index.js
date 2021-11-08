@@ -4,19 +4,27 @@ import { Link, useHistory } from 'react-router-dom';
 import './menu.css';
 import classes from './Menu.module.css';
 
-const Menu = (props) => {
+const Menu = () => {
 
-  const [user, setCurrUser] = useState(localStorage.getItem("UserID"));
+  //const [user, setCurrUser] = useState(localStorage.getItem("UserID"));
+  var [isLoggedIn, setLoggedIn] =useState(localStorage.getItem("UserID"));
   let history = useHistory();
+
+
+  const loggedInEventHandler = () => {
+    //setCurrUser(localStorage.getItem("UserID"));
+    setLoggedIn(localStorage.getItem("UserID"));
+  }
+  const loggedOutEventHandler = () => {
+    setLoggedIn(null);
+  }
+
   const logoutUser = () => {
     localStorage.removeItem('UserID');
-    setCurrUser(null);
+    //setCurrUser(null); 
     const loggedOutEvent = new CustomEvent("logged-out", {});
     window.dispatchEvent(loggedOutEvent);
   }
-
-
-  const [isLoggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     window.addEventListener("logged-in", loggedInEventHandler);
@@ -27,12 +35,6 @@ const Menu = (props) => {
     }
   });
 
-  const loggedInEventHandler = () => {
-    setLoggedIn(true);
-  }
-  const loggedOutEventHandler = () => {
-    setLoggedIn(false);
-  }
 
   return (
     <>
@@ -48,7 +50,7 @@ const Menu = (props) => {
             <Nav.Link className={classes.link} as={Link} to="/account-images">
               Saved Images
             </Nav.Link>
-            {!isLoggedIn ? <Nav.Link className={classes.link} onClick={() => { history.push({ pathname: "/login", state: { user } }) }}  >
+            {!isLoggedIn ? <Nav.Link className={classes.link} onClick={() => { history.push({ pathname: "/login" }) }}  >
               Login
             </Nav.Link> :
               <Nav.Link className={classes.link} onClick={() => logoutUser()} as={Link} to="/">

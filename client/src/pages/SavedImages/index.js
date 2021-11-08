@@ -20,7 +20,7 @@ const SavedImages=()=>{
 
       console.log("coll name obtained");
       console.log(newCollname)
-      Axios.post("http://localhost:3004/addnewcollection",{collName:newCollname}).then(
+      Axios.post("http://localhost:3004/addnewcollection",{collName:newCollname,uid:UserID}).then(
          (res)=>{
             console.log(res.data)
             if(res.data==="new doc added" || res.data==="doc updated")
@@ -33,7 +33,7 @@ const SavedImages=()=>{
 
    const deleteColl=(collname)=>{
       console.log(collname);
-      Axios.post("http://localhost:3004/deleteCollection",{collection:collname}).then(
+      Axios.post("http://localhost:3004/deleteCollection",{collection:collname,uid:UserID}).then(
          (res)=>{
             if(res.data==="ok")
             {setdelstatus(!colldeleted);}
@@ -44,7 +44,7 @@ const SavedImages=()=>{
 
 useEffect( ()=>{
 
-         Axios.get("http://localhost:3004/ImageLists").then((imgobj)=>{ 
+         Axios.get(`http://localhost:3004/ImageLists/${UserID}`).then((imgobj)=>{ 
             if(imgobj.data==="Empty List")  
             {
                   console.log(imgobj.data);

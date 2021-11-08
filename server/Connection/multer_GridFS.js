@@ -9,7 +9,6 @@ const mongoPassword=process.env.DB_PASS;
 const mongoURI=`mongodb+srv://${mongoUsername}:${mongoPassword}@hfg.prgke.mongodb.net/HFG?retryWrites=true&w=majority`;
 
 
-const uid="6173897315e1bbccd6a0c4f0";
 // connection for gfs
 const conn=mongoose.createConnection(mongoURI,{ useNewUrlParser: true, useUnifiedTopology: true });
 let gfs;//init gfs

@@ -13,12 +13,13 @@ const ImageCard=(props)=>{
     const currImgName=props.img_name;
     const listNames=props.listNames;
     const filename=props.filename;
+    const UserID=localStorage.getItem('UserID');
    // console.log(currlist);
     //console.log(listNames)
     
     const moveImage=async (newList)=>{
          //console.log(newList)
-         const postData={collName:newList,imgName:currImgName,imgURL:filename};
+         const postData={uid:UserID,collName:newList,imgName:currImgName,imgURL:filename};
          //console.log(postData);
 
         await Axios.post("http://localhost:3004/addImage",postData).then((res)=>{
@@ -34,7 +35,7 @@ const ImageCard=(props)=>{
     }
     
     const deleteImage=async ()=>{
-        const postData={collName:currlist,imgName:currImgName,imgURL:filename};
+        const postData={uid:UserID,collName:currlist,imgName:currImgName,imgURL:filename};
 
         await Axios.post("http://localhost:3004/removeImage",postData).then((res)=>{
             console.log(res);

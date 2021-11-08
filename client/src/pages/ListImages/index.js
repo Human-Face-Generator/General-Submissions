@@ -10,14 +10,16 @@ const ListImages=(props)=>{
     // hence imgobjs needs to be updated
     const currentList=props.location.state.images.listName;
    const allListNames=props.location.state.allListNames;
+
    const UserID=localStorage.getItem('UserID');
    console.log(UserID);
 
   const sendfile=async()=>{
     const formdata = new FormData();
     formdata.append("sampleimg",file);
-    console.log(formdata);
-   await Axios.post("http://localhost:3004/upload",formdata).then((res)=>console.log(res)).catch(err=>console.log(err))
+    //formdata.append("uid",UserID);
+    //console.log(formdata);
+   await Axios.post(`http://localhost:3004/upload/${UserID}`,formdata).then((res)=>console.log(res)).catch(err=>console.log(err))
 }
 
     useEffect(async()=>{
@@ -27,7 +29,7 @@ const ListImages=(props)=>{
     },[props.location.state.images.list]);
 
     useEffect(async()=>{
-      await Axios.get(`http://localhost:3004/collection-imageList/${currentList}`)
+      await Axios.get(`http://localhost:3004/collection-imageList/${UserID}/${currentList}`)
       .then(obj=>{//console.log(obj);
         setImgobjs(obj.data.list);
       })

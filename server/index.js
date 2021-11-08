@@ -25,7 +25,7 @@ app.use(cors());
 // }));
 // app.use(passport.initialize());
 // app.use(passport.session());
-const uid="6173897315e1bbccd6a0c4f0";
+
 
 const addNewUser=async ({req,res})=>{
     try{       
@@ -131,7 +131,9 @@ const checkLoginData=async ({req,res})=>{
 
 const addCollection=async({req,res})=>{
     const collName=req.body.collName;
-   // console.log(req.body)
+    const uid=req.body.uid;
+    
+    console.log(req.body)
     const newColl={
         listName:collName,
         list:[]
@@ -168,13 +170,15 @@ const addCollection=async({req,res})=>{
 
 const deleteCollection=async ({req,res})=>{
     const coll=req.body.collection;
+    const uid=req.body.uid;
     await SavedImagesModel.findByIdAndUpdate(uid,{$pull:{lists:{listName:coll}}}).
     then( result=>res.send("ok")
     ).catch((err)=>console.log(err));
     
 }
 
-const getImages=async ({req,res})=>{
+const getImages=async ({uid,res})=>{
+    
     await SavedImagesModel.findOne({_id:uid}).then(
         (doc)=>{ 
             if(doc)     
@@ -188,8 +192,10 @@ const getImages=async ({req,res})=>{
     ).catch(err=>console.log(err));
 }
 
-const uploadTodb=async ({req,res})=>{
+const uploadTodb=async ({req,res,uid})=>{ // has to be modified
     const filename=(req.file.filename)
+    console.log(req.data)
+    
     const new_img={img_name:"Imagexyz",img_url:filename};
     const query= {$push:{'lists.$.list':new_img}};
 
@@ -223,6 +229,7 @@ const addNewImage=async ({req,res})=>{
     const collName=req.body.collName;
     const imgURL=req.body.imgURL;
     const imgName=req.body.imgName;
+    const uid=req.body.uid;
 
     const new_img={img_name:imgName,img_url:imgURL};
     const query= {$push:{'lists.$.list':new_img}};
@@ -240,6 +247,7 @@ const deleteImage=async ({req,res})=>{
     const collName=req.body.collName;
     const imgURL=req.body.imgURL;
     const imgName=req.body.imgName;
+    const uid=req.body.uid;
 
     const img={img_name:imgName,img_url:imgURL};
     const query= {$pull:{'lists.$.list':img}};
@@ -253,7 +261,7 @@ const deleteImage=async ({req,res})=>{
 
 }
 
-const CollectionList=async ({collName,res})=>{
+const CollectionList=async ({uid,collName,res})=>{
     await SavedImagesModel.findOne({_id:uid,'lists.listName':collName},"lists.$").then(
      (obj)=>{
          res.send(obj.lists[0]);
@@ -261,13 +269,37 @@ const CollectionList=async ({collName,res})=>{
     ).catch(err=>console.log(err))
 }
 
+const verifyEmailLink=async ({uid,tokenId,res})=>{
+    const user=await SignupModel.findOne({_id:uid});
+    if(!user)
+    {    
+        res.send("Invalid Link");
+    }
+    else
+    {
+        const checkToken=await tokenModel.findOne({user_id:uid,token:tokenId});
+        if(!checkToken)
+        {   
+            res.send("Invalid Link");
+        }
+        else
+        {   user.status="active";
+           await user.save();
+           await tokenModel.deleteOne({_id:checkToken._id});
+            
+            res.redirect(`http://localhost:3000/user/${user._id}`);
+        }
+    }
+    
+}
+
+
+
+
 // adding New User info to database
 app.post("/signupInfo",async (req,res)=>{
-    await addNewUser({req,res});
-    
+    await addNewUser({req,res});   
  });
-
-
 
 // Checking login info 
 app.post("/LoginInfo", async (req,res)=>{
@@ -295,13 +327,15 @@ app.post("/removeImage",async (req,res)=>{
 })
 
 // getting saved images
-app.get("/ImageLists", async (req,res)=>{
-    await getImages({req,res});  
+app.get("/ImageLists/:uid", async (req,res)=>{
+    const uid=req.params.uid;
+    await getImages({uid,res});  
   }); 
 
 // uploading user images to default list as of now
-app.post("/upload",upload.single("sampleimg"),async (req,res)=>{
-   await uploadTodb({req,res});
+app.post(`/upload/:uid`,upload.single("sampleimg"),async (req,res)=>{
+    const uid=req.params.uid;
+   await uploadTodb({req,res,uid});
 });
 
 //display requested image
@@ -311,34 +345,17 @@ app.get("/obtain-images/:filename",async (req,res)=>{
 });
 
 // obtain collection imageslist
-app.get("/collection-imageList/:collname",async (req,res)=>{
+app.get("/collection-imageList/:uid/:collname",async (req,res)=>{
     const collName=req.params.collname;
-    await CollectionList({collName,res});
+    const uid=req.params.uid;
+    await CollectionList({uid,collName,res});
 });
 
+// verifying email link of user
 app.get("/user-verification/:uid/:token",async (req,res)=>{
     const uid=req.params.uid;
     const tokenId=req.params.token;
-    const user=await SignupModel.findOne({_id:uid});
-    if(!user)
-    {    
-        res.send("Invalid Link");
-    }
-    else
-    {
-        const checkToken=await tokenModel.findOne({user_id:uid,token:tokenId});
-        if(!checkToken)
-        {   
-            res.send("Invalid Link");
-        }
-        else
-        {   user.status="active";
-           await user.save();
-           await tokenModel.deleteOne({_id:checkToken._id});
-            
-            res.redirect(`http://localhost:3000/user/${user._id}`);
-        }
-    }
+    await verifyEmailLink({uid,tokenId,res});
 })
 
 app.listen(3004,()=>{

@@ -3,12 +3,11 @@ import { Link, Redirect, useLocation, useHistory } from 'react-router-dom';
 import { useState } from 'react';
 import Axios from "axios";
 
-const Login = (props) => {
-
+const Login = () => {
+   
     const [email, setEmail] = useState("");
     let location = useLocation();
-    // console.log(location.state);
-    // console.log(props)
+   
     const [password, setPassword] = useState("");
     const [validUser, setValidity] = useState(false);
     const [errors, setErrors] = useState("");
@@ -20,10 +19,6 @@ const Login = (props) => {
                 localStorage.setItem("UserID", res.data.uid);
                 const loggedInEvent = new CustomEvent("logged-in", {});
                 window.dispatchEvent(loggedInEvent);
-                //  history.push({path:"/",state:{user:res.data.uid}})
-
-                console.log(localStorage.getItem("UserID"))
-                // (props.location.state.setCurrUser(res.data.uid))
                 setValidity(true);
             }
             else {
