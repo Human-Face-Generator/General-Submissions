@@ -1,6 +1,6 @@
 import './SavedImages.css';
 import {useState,useEffect} from "react";
-import {useHistory} from "react-router";
+import {useHistory,Redirect} from "react-router";
 import Axios from 'axios';
 import {Button} from "react-bootstrap";
 import deleteIcon from "./images/deleteIcon.png";
@@ -43,7 +43,7 @@ const SavedImages=()=>{
    }
 
 useEffect( ()=>{
-
+       if(!UserID){return ;}
          Axios.get(`http://localhost:3004/ImageLists/${UserID}`).then((imgobj)=>{ 
             if(imgobj.data==="Empty List")  
             {
@@ -63,6 +63,11 @@ useEffect( ()=>{
 
     return (
         <>
+        {!UserID ?
+        <div className="getUserLoggedin">
+       Hey please login and lets start by making some awesome collections
+
+        </div>:
         <div className="bgsetup">
         <div className="savedImages">
 
@@ -108,7 +113,7 @@ useEffect( ()=>{
 
         </div>
         <br/>
-       </div>
+       </div>}
         </>
     );
 }

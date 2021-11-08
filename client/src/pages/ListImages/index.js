@@ -5,7 +5,7 @@ import ImageCard from "../../Components/ImageCard";
 
 const ListImages=(props)=>{
     const [imgobjs,setImgobjs]=useState([]);//array of image objects   
-    const [file,setfile]=useState(null);
+   
     const [listToggle,setToggling]=useState(false);// image moved from curr list to another
     // hence imgobjs needs to be updated
     const currentList=props.location.state.images.listName;
@@ -13,15 +13,7 @@ const ListImages=(props)=>{
 
    const UserID=localStorage.getItem('UserID');
    console.log(UserID);
-
-  const sendfile=async()=>{
-    const formdata = new FormData();
-    formdata.append("sampleimg",file);
-    //formdata.append("uid",UserID);
-    //console.log(formdata);
-   await Axios.post(`http://localhost:3004/upload/${UserID}`,formdata).then((res)=>console.log(res)).catch(err=>console.log(err))
-}
-
+   
     useEffect(async()=>{
         const imglist=props.location.state.images.list;
         setImgobjs(imglist);
@@ -61,8 +53,7 @@ const ListImages=(props)=>{
               })}
  
          </div>
-         <input type="file" name="sampleimg" onChange={(e)=>setfile(e.target.files[0])}/>
-<button onClick={()=>sendfile()}>send</button>
+        
        </div>
         </>
     );

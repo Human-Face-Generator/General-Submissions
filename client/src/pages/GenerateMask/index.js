@@ -5,13 +5,16 @@ import { useState } from 'react';
 // import CanvasDraw from "react-canvas-draw";
 import CanvasDraw from "../../Components/CanvasDraw";
 import { saveAs } from 'file-saver';
-import axios from 'axios';
-
+import Axios from 'axios';
+import {Button} from "react-bootstrap";
 function GenerateMask() {
 
   const fetchmaskURL="http://localhost:5000/createMask";
   const createFaceURL="http://localhost:5000/createFace";
   const fetchrandomFaceURL="http://799f-35-193-108-70.ngrok.io";
+  const [maskfile,setmaskfile]=useState(null);
+  const [randomImgFiles,setRandomImages]=useState([])
+  const UserID=localStorage.getItem('UserID');
   
   const defaultProps = {
     onChange: null,
@@ -108,11 +111,30 @@ function GenerateMask() {
     }).then((response) => response)
       .then(result => result)
       .catch((err) => console.error(err))
-    // console.log(response)
-    let res = await response.blob()
+    
+    let res = await response.blob();
+
+    var filedata = new File([res], "randomimg",{type:'image/jpeg'});
+     console.log(filedata);
+     
+     setmaskfile(filedata);
     localStorage.setItem("face", window.URL.createObjectURL(res));
     setnewFace(localStorage.getItem("face"))
   }
+  
+  const AddtoCollection=async ()=>{
+    const formdata = new FormData();
+    formdata.append("savedimg",maskfile);
+   await Axios.post(`http://localhost:3004/upload/${UserID}`,formdata).then((res)=>
+   console.log(res)).catch(err=>console.log(err)) 
+  }
+
+  const sendfiles=async()=>{
+    const formdata = new FormData();
+    console.log(randomImgFiles)
+    formdata.append("randomImages",randomImgFiles);
+   await Axios.post(`http://localhost:3004/uploadRandomImgs`,formdata).then((res)=>console.log(res)).catch(err=>console.log(err))
+}
 
   return (
     <div className="App">
@@ -211,7 +233,7 @@ function GenerateMask() {
           </div>
         </div>
 
-        <img src={orimage} height="200" />
+       { orimage !== "null"?<img src={orimage} height="200" /> :null}
         <CanvasDraw
           ref={canvasDraw => (saveableCanvas = canvasDraw)}
           brushColor={state.color}
@@ -223,9 +245,21 @@ function GenerateMask() {
           // refreshBackgroundImage={true}
         />
         {/* <p>{state.uimg}</p> */}
-        {newFace?<img src={newFace}  />:null}
+        {newFace?
+       <div>
+          <img src={newFace} /><br/> 
+        <Button onClick={async ()=>await AddtoCollection()}>
+         Add to Default collection
+         </Button>
+        </div>:
+        null}
+        <br/>
+        <div>random image</div>
+<input type="file" multiple onChange={(e)=>setRandomImages(e.target.files)}/>
+<button onClick={()=>sendfiles()}>send</button>
       </div>
     </div>
+    
   );
 }
 

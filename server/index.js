@@ -194,7 +194,8 @@ const getImages=async ({uid,res})=>{
 
 const uploadTodb=async ({req,res,uid})=>{ // has to be modified
     const filename=(req.file.filename)
-    console.log(req.data)
+    // console.log("in uploadTodb fxn")
+    // console.log(req.data)
     
     const new_img={img_name:"Imagexyz",img_url:filename};
     const query= {$push:{'lists.$.list':new_img}};
@@ -207,6 +208,10 @@ const uploadTodb=async ({req,res,uid})=>{ // has to be modified
     ).catch((err)=>{console.log(err)})
 }
 
+const uploadRandomImages=async ({req,res})=>{
+    const files=req.files[0];
+    console.log(files);
+}
 const showImage=async ({res,imgurl})=>{
    // console.log(imgurl);
   
@@ -217,7 +222,7 @@ const showImage=async ({res,imgurl})=>{
                 res.send("one of the image not present");
             }
             else
-            {  console.log(file);
+            {  //console.log(file);
                 const readStream = gridFSBucket.openDownloadStream(file._id);
                 readStream.pipe(res);              
             }
@@ -294,8 +299,6 @@ const verifyEmailLink=async ({uid,tokenId,res})=>{
 }
 
 
-
-
 // adding New User info to database
 app.post("/signupInfo",async (req,res)=>{
     await addNewUser({req,res});   
@@ -333,9 +336,14 @@ app.get("/ImageLists/:uid", async (req,res)=>{
   }); 
 
 // uploading user images to default list as of now
-app.post(`/upload/:uid`,upload.single("sampleimg"),async (req,res)=>{
+app.post(`/upload/:uid`,upload.single("savedimg"),async (req,res)=>{
     const uid=req.params.uid;
    await uploadTodb({req,res,uid});
+});
+
+//uploading random images to db
+app.post('/uploadRandomImgs',upload.array('randomImages',10),async(req,res)=>{
+   await uploadRandomImages({req,res});
 });
 
 //display requested image

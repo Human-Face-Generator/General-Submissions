@@ -87,3 +87,11 @@
     background-color:aliceblue;
 }
 
+.getUserLoggedin{
+    min-height:250px;
+    width:80%;
+    margin : 10% auto;
+    font-size:30px;
+    font-family: cursive;
+    color:rgb(161, 67, 67);
+}
