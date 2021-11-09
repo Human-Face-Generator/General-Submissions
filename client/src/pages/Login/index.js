@@ -2,7 +2,7 @@ import { Button } from "react-bootstrap";
 import { Link, Redirect, useLocation, useHistory } from 'react-router-dom';
 import { useState } from 'react';
 import Axios from "axios";
-
+import './index.css';
 const Login = () => {
    
     const [email, setEmail] = useState("");
@@ -31,7 +31,7 @@ const Login = () => {
     return (
         <>
             <div className="formContainer" >
-                <h3>Login</h3><br />
+                <h3 >Login</h3><br />
                 <form className="form-elements">
 
                     <div className="inputfield">
@@ -67,7 +67,7 @@ const Login = () => {
                 <br />
                 {errors && <p className="signupErrors">{errors}<br /></p>}
                 {validUser && <Redirect to="/" ></Redirect>}
-                <p>Not registered yet? <Link to="/Signup"> Create an Account</Link> </p>
+                <p className="loginFooter">Not registered yet? <Link to="/Signup"> Create an Account</Link> </p>
             </div>
 
         </>

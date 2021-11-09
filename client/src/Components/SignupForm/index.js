@@ -14,7 +14,7 @@ const SignupForm=()=>{
     const [vpassword,setVpassword]=useState("");
     const [errors,setErrors]=useState({});
     const [mailsent,setMailstatus]=useState(false);
-    const [shouldsubmit,setSubmit]=useState(false);
+  
 
     const checkfields=async ()=>{
                     
@@ -129,7 +129,6 @@ If you do not receive a confirmation email, please check your spam folder.<br/> 
   <Button disabled={fxn()}>Resend link</Button>
  </div>}
        
-         {shouldsubmit && <Redirect to="/"/>}
         </form>
        </div>
        </>

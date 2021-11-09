@@ -4,7 +4,7 @@ import addList from "./images/addList.png";
 import { Dropdown } from "react-bootstrap";
 import Axios from "axios";
 import deleteIcon from "../../pages/SavedImages/images/deleteIcon.png";
-
+import downloadIcon from "./images/downloadIcon.png";
 const ImageCard=(props)=>{
 
     const [imgURL,seturl]=useState("");
@@ -42,26 +42,40 @@ const ImageCard=(props)=>{
             props.setToggling(!props.listToggle);// re-rendering the list of images
          }).catch((err)=>{console.log(err)}); 
     }
+    
+    const downloadImg=async ()=>{
+        const image = await fetch(imgURL);// NOT same as Axios.get(imgURL)
+        const imageBlob = await image.blob()
+        //console.log(imageBlob)
+        const imageURL = URL.createObjectURL(imageBlob)
+        const link = document.createElement('a')
+        link.href = imageURL
+        link.download = `${currImgName}`+'.jpg';
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+    }
 
+    
     useEffect(()=>{
         seturl(props.img_url);
         setname(props.img_name);
-    })
+    },[])
     return (
         <>
         <div className="cardContainer">
 
        {!props.img_url?<p>loading...</p> :<img className="cardimg" src={imgURL}/>}
+    
         <div className="cardFooter">
 
-        <p><em>{imgName}</em></p>
-
+       <p><em>{imgName}</em></p>
         <Dropdown className="move" >
 
           <Dropdown.Toggle variant="" className="listIcon" >
           <img  className="listIcon" src={addList}/>
           </Dropdown.Toggle>
-
+          
          <Dropdown.Menu className="listmenu">
           
             { listNames.map((listName, idx)=>{
@@ -81,8 +95,15 @@ const ImageCard=(props)=>{
          </Dropdown.Menu>
 
        </Dropdown>
+         
+      
+    
+        
        
-         <img className="deleteImgIcon" src={deleteIcon} 
+        <img className="ImgIcon" src={downloadIcon}
+         onClick={async ()=>await downloadImg()}/> 
+        
+         <img className="ImgIcon" src={deleteIcon} 
               onClick={async()=>await deleteImage()}
          />
         

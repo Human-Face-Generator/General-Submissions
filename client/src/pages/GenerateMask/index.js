@@ -8,6 +8,8 @@ import { saveAs } from 'file-saver';
 import Axios from 'axios';
 import { Button } from "react-bootstrap";
 import Compress from "compress.js";
+
+
 function GenerateMask() {
 
   const fetchmaskURL = "http://localhost:5000/createMask";
@@ -117,12 +119,14 @@ function GenerateMask() {
       .catch((err) => console.error(err))
 
     let res = await response.blob();
-    // ********************************************************************
+   
     localStorage.setItem("maskImage1",res);
-    var filedata = new File([res], "randomimg", { type: 'image/jpeg' });
-    console.log(filedata);
+ // ********************************************************************
+    var filedata = new File([res], "randomimg", { type: 'image/jpeg' }); 
+    var resizedFileData=await resizeImageFn(filedata) ;
+    setCusImg(resizedFileData);
+ // ********************************************************************
     localStorage.setItem("maskImage",filedata);
-    setCusImg(filedata);
     localStorage.setItem("face", window.URL.createObjectURL(res));
     setnewFace(localStorage.getItem("face"))
   }
@@ -147,8 +151,8 @@ function GenerateMask() {
     const img = resizedImage[0];
     const base64str = img.data
     const imgExt = img.ext
-    const resizedFiile = Compress.convertBase64ToFile(base64str, imgExt)
-    return resizedFiile;
+    const resizedFile = Compress.convertBase64ToFile(base64str, imgExt)
+    return resizedFile;
   }
 
   const sendfiles = async () => {

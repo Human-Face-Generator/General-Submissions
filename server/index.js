@@ -318,7 +318,7 @@ const getRandomImages=async (res)=>{
     try{
     
       var list= await RandomImgModel.find({},{imgURL:1,_id:0});
-       console.log(list)
+       //console.log(list)
        res.send(list);
     }
     catch(err)

@@ -61,9 +61,10 @@
     cursor: pointer;
     float:right;
 }
-/* .deleteicon:hover{
-    height:50px;
-} */
+.deleteicon:hover{
+    transform: scale(1.2);
+    transition:all 0.1s linear
+} 
 .listNames,.newlist{
     display: flex;
     flex-direction:column;
