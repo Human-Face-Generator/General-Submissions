@@ -19,7 +19,7 @@ const UseCaseItemBrief = [
         topic: "Design and Prototyping"
     },
     {
-        pic: <img className={classes['item-image-gaming']} src={gamingImage}></img>,
+        pic: <img className={classes['item-image']} src={gamingImage}></img>,
         topic: "Gaming Industry"
     },
     {

@@ -72,11 +72,11 @@ useEffect( ()=>{
         <div className="savedImages">
 
             <div className="headingSI">
-            <h1 >Organize your saved photos here</h1>
+            <p >Organize your saved photos here</p>
             </div>
            
             <div className="listNames">
-             <h1>Your Gallery</h1><br/>
+             {/* <p>Your Gallery</p><br/> */}
             { ImageLists && ImageLists.map((list,idx)=>{
                return (
                   <div className="listItem" key={idx}>

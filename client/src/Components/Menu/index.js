@@ -41,8 +41,8 @@ const Menu = () => {
       <Navbar className={classes.bg} expand="lg">
 
         <Nav.Link as={Link} className={classes.home} to="/"> HOME </Nav.Link>
-        <Navbar.Toggle className={classes['toggle-icon']} aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
+        <Navbar.Toggle className={classes['navbar-toggler']} aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse  id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link className={classes.link} as={Link} to="/Uses">
               Use Cases
