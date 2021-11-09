@@ -12,8 +12,8 @@ import Footer from "./Components/Footer/Footer";
 import About from "./Components/FooterPages/About";
 import Contact from "./Components/FooterPages/Contact";
 import FAQ from "./Components/FooterPages/FAQ";
-import ExploreImages from "./Components/FooterPages/ExploreImages";
 import User from "./pages/User";
+import RandomImages from "./pages/RandomImages";
 
 function App() {
 
@@ -34,7 +34,8 @@ function App() {
           <Route path="/about"> <About /> </Route>
           <Route path="/contact"> <Contact /></Route>
           <Route path="/FAQ"> <FAQ /> </Route>
-          <Route path="/explore-images"> <ExploreImages /> </Route>
+          <Route path="/explore-images"> <RandomImages/> </Route>
+          
         </Switch>
         <Footer />
       </Router>

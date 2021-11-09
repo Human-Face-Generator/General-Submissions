@@ -50,6 +50,9 @@ const Menu = () => {
             <Nav.Link className={classes.link} as={Link} to="/generateMask">
               Generate a face from mask
             </Nav.Link>
+            <Nav.Link className={classes.link} as={Link} to="/explore-images">
+              Browse All Images
+            </Nav.Link>
             <Nav.Link className={classes.link} as={Link} to="/account-images">
               Saved Images
             </Nav.Link>

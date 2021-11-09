@@ -12,7 +12,7 @@ function GenerateMask() {
   const fetchmaskURL="http://localhost:5000/createMask";
   const createFaceURL="http://localhost:5000/createFace";
   const fetchrandomFaceURL="http://799f-35-193-108-70.ngrok.io";
-  const [maskfile,setmaskfile]=useState(null);
+  const [customImg,setCusImg]=useState(null);
   const [randomImgFiles,setRandomImages]=useState([])
   const UserID=localStorage.getItem('UserID');
   
@@ -113,27 +113,36 @@ function GenerateMask() {
       .catch((err) => console.error(err))
     
     let res = await response.blob();
-
+  // ********************************************************************
+  
     var filedata = new File([res], "randomimg",{type:'image/jpeg'});
      console.log(filedata);
      
-     setmaskfile(filedata);
+     setCusImg(filedata);
     localStorage.setItem("face", window.URL.createObjectURL(res));
     setnewFace(localStorage.getItem("face"))
   }
   
   const AddtoCollection=async ()=>{
     const formdata = new FormData();
-    formdata.append("savedimg",maskfile);
+    formdata.append("savedimg",customImg);
+    console.log(formdata)
    await Axios.post(`http://localhost:3004/upload/${UserID}`,formdata).then((res)=>
-   console.log(res)).catch(err=>console.log(err)) 
+   console.log(res)).catch(err=>console.log(err)) ;
   }
 
   const sendfiles=async()=>{
     const formdata = new FormData();
-    console.log(randomImgFiles)
-    formdata.append("randomImages",randomImgFiles);
-   await Axios.post(`http://localhost:3004/uploadRandomImgs`,formdata).then((res)=>console.log(res)).catch(err=>console.log(err))
+    //console.log(randomImgFiles)
+    // formdata.append("randomImages",randomImgFiles);   cant do it in this way
+   var i=0;
+   for(i;i<randomImgFiles.length;i++)
+   {
+     formdata.append("randomImages",randomImgFiles[i]);
+   }
+    console.log(formdata)
+   await Axios.post(`http://localhost:3004/uploadRandomImgs`,formdata).then((res)=>
+   console.log(res)).catch(err=>console.log(err));
 }
 
   return (

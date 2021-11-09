@@ -3,9 +3,10 @@ import cors from "cors";
 import bcrypt from "bcrypt";
 import  "./Connection/mongodb.js";
 import {upload,gfs,gridFSBucket} from "./Connection/multer_GridFS.js";
-import SignupModel from "./models/SignupModel.js";
-import SavedImagesModel from "./models/SavedImagesModel.js";
+import SignupModel from "./models/Signup.js";
+import SavedImagesModel from "./models/SavedImages.js";
 import tokenModel from "./models/userToken.js";
+import RandomImgModel from "./models/RandomImages.js"
 import sendEmail from "./utils/Email.js";
 import crypto from "crypto";
 // import passport from "passport";
@@ -209,9 +210,23 @@ const uploadTodb=async ({req,res,uid})=>{ // has to be modified
 }
 
 const uploadRandomImages=async ({req,res})=>{
-    const files=req.files[0];
-    console.log(files);
+    const files=req.files;
+    //console.log(files.length);
+    try{
+    var i=0;
+    for(i;i<files.length;i++)
+    {
+      const filename=  files[i].filename;
+      const RandomImg=await new RandomImgModel({imgURL:filename}).save();
+    }
+    res.send("Random images uploaded successfuly");
 }
+    catch(err)
+    {
+        console.log(err);
+    }
+}
+
 const showImage=async ({res,imgurl})=>{
    // console.log(imgurl);
   
@@ -298,6 +313,19 @@ const verifyEmailLink=async ({uid,tokenId,res})=>{
     
 }
 
+const getRandomImages=async (res)=>{
+
+    try{
+    
+      var list= await RandomImgModel.find({},{imgURL:1,_id:0});
+       console.log(list)
+       res.send(list);
+    }
+    catch(err)
+    {
+        console.log(err);
+    }
+}
 
 // adding New User info to database
 app.post("/signupInfo",async (req,res)=>{
@@ -364,7 +392,12 @@ app.get("/user-verification/:uid/:token",async (req,res)=>{
     const uid=req.params.uid;
     const tokenId=req.params.token;
     await verifyEmailLink({uid,tokenId,res});
-})
+});
+
+// random images created by site till now
+app.get("/obtain-Random-images",async(req,res)=>{
+    await getRandomImages(res);
+});
 
 app.listen(3004,()=>{
     console.log("Server running at 3004");
