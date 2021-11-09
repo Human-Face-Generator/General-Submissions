@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap');
 
+
 .bg {
     background-color: #2C2C2C !important; 
     /* background-color: #2f2626 !important; */
-    padding-top: 25px !important;
-    padding-bottom: 25px !important;
+    padding:0.8%!important
 }
 
 .link{
@@ -12,6 +12,7 @@
     margin-left: 20px !important;
     margin-right: 20px !important;
     transition: 0.15s;
+    font-size: 16px!important;
 }
 
 .link:hover{
@@ -28,11 +29,11 @@
 }
 
 .home{
-    font-size: 30px ;
-    margin-left: 20px;
-    margin-right: 10px; 
+    font-size: 23px ;
+    /* margin-left: 20px;
+    margin-right: 10px;  */
     color: aliceblue !important;
-    font-family: 'Bubblegum Sans', cursive;
+    /* font-family: 'Bubblegum Sans', cursive; */
     transition: 0.15s;
 }
 
@@ -47,7 +48,14 @@
     background-color:	#404040 !important;
 }
 
-.toggle-icon{
+.navbar-toggler {
+    padding: 3px 8px !important;
+    font-size: 15px!important;
+    line-height: 1;
+    /* background-color: transparent; */
     background-color: #E8E8E8 !important;
     color: #343A40 !important;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    transition: box-shadow .15s ease-in-out;
 }

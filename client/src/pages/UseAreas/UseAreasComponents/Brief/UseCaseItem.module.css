@@ -9,10 +9,10 @@
 }
 
 .item-image{
-  height: 9.375rem ;
-  width: 9.375rem;
+  height:90% ;
+  width: 90%;
   justify-content: center;
-  padding-left: 0.625rem;
+  padding-left: 6%;
 }
 
 .item-image-gaming{
