@@ -11,15 +11,15 @@
     color: whitesmoke !important;
     margin-left: 20px !important;
     margin-right: 20px !important;
-    transition: 0.15s;
-    font-size: 20px!important;
+    transition: 0.1s;
+    font-size: 17px!important;
 }
 
 .link:hover{
     /* color: #1C1427 !important;
     background-color: #6E7C7C !important; */
     color: white !important;
-    background-color:	#404040 !important;
+    background-color:	#575555 !important;
     transform: scale(1.05);
 }
 

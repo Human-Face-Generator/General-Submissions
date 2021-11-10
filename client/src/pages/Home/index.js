@@ -3,12 +3,28 @@ import './home.css';
 import { useHistory } from "react-router-dom";
 import {Button} from "react-bootstrap";
 import Carousel from 'react-bootstrap/Carousel'
+import Axios from "axios";
+import { useState,useEffect } from "react";
 const Home =()=>{
-  const history = useHistory();
+  const history = useHistory(); 
+  const [imgUrls,setUrls]=useState([]);
+
   const maskRoute=()=>{
     history.push('/generateMask');
   }
     
+  useEffect(async ()=>{
+     const response= await Axios.get("http://localhost:3004/obtain-Random-images");
+    const data=response.data;
+    var list=[];
+    data.map((obj,idx)=>{
+      list.push(obj.imgURL);
+    })
+    //console.log(list);
+    setUrls(list);
+   //setTimeout(()=>{setShowimg(true)},2000)
+  },[])
+ 
     return (
       <>
         <div className="homepage">
@@ -24,33 +40,29 @@ const Home =()=>{
   
         </div>
 <Carousel fade >
-  <Carousel.Item  interval={4000}>
-    <img
-      className="d-block"
-      src="https://static.generated.photos/vue-static/face-generator/landing/wall/20.jpg"
-      alt="First slide"
-    />
-    
-  </Carousel.Item>
-  <Carousel.Item  interval={4000}>
-    <img
-      className="d-block"
-      src="https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8aHVtYW4lMjBmYWNlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80"
-      alt="Second slide"
-    />
+  
+   {imgUrls && imgUrls.map((url,idx)=>{
+      return (
+      <Carousel.Item  interval={4000}>
+        <img
+          className="d-block"
+          key={idx}
+          src={`http://localhost:3004/obtain-images/${url}`}
+        />      
+      </Carousel.Item>
+      )
+      })}
 
-    
-  </Carousel.Item>
-  <Carousel.Item  interval={4000}>
-    <img
-      className="d-block"
-      src="https://cdn.pixabay.com/photo/2021/06/04/10/28/portrait-6309448_960_720.jpg"
-      alt="Third slide"
-    />
-
-  </Carousel.Item>
 </Carousel>
 
+  <div className="homePage-subsection">
+    <h2 >Create the face you need</h2>
+    <p>
+     Yes. Just like in the videogames, you can now
+create a photo-realistic face from scratch.
+Just select the suitable parameters.
+    </p>
+  </div>
       </>
     );
 }
