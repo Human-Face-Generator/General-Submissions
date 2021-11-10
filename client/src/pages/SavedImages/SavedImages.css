@@ -101,6 +101,9 @@
     width:80%;
     margin : 10% auto;
     font-size:30px;
+    align-items: center;
+    padding-top:5%;
     font-family: cursive;
     color:rgb(161, 67, 67);
+    background-color:rgb(123, 215, 238);
 }

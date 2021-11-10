@@ -2,9 +2,10 @@
 
 
 .bg {
-    background-color: #3a3636 !important; 
+    background-color: rgb(16,12,8)!important; 
     /* background-color: #2f2626 !important; */
-    padding:0.8%!important
+    padding:0.8%!important;
+    min-height:80px;
 }
 
 .link{

@@ -1,9 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Roboto:ital,wght@1,500&display=swap');
+
+.loginHeading{
+    margin-top:10%;
+   font-family:Arial, Helvetica, sans-serif;
+    font-size:40px;
+}
+.loginHeader{
+    display: flex;
+    flex-direction:row;
+    justify-content: space-between;
+    width:82%;
+}
+.LoginIcon{
+    width:40%;
+}
 .loginFooter{
-    font-size:20px;
+    font-size:19px;
     display: flex;
     flex-direction:row;
     flex-wrap:wrap;
     align-items:flex-start;
     justify-content: space-between;
-    width:95%;
+    font-weight: 450;
+    width:82%;
 }
+
+.LoginPage{
+   
+    background-image: url('./images/backgroundImg.jpg');
+    min-height: 600px;
+    padding:3%;
+}
+
+.LoginformContainer{
+    display:flex;
+    flex-direction:column;  
+    margin:1%auto;  
+    min-height:420px;
+    width:35%;
+    padding:3%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 8px 20px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 20px; 
+    background-color: white;
+}
+
+@media screen and (max-width: 800px) {
+     .LoginformContainer{
+         width:60%;
+         min-height:500px;
+     }
+    .loginFooter{
+        padding-left:15%;
+    }
+  }

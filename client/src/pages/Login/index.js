@@ -3,6 +3,9 @@ import { Link, Redirect, useLocation, useHistory } from 'react-router-dom';
 import { useState } from 'react';
 import Axios from "axios";
 import './index.css';
+import LoginIcon from './images/LoginIcon.png';
+
+
 const Login = () => {
    
     const [email, setEmail] = useState("");
@@ -29,9 +32,15 @@ const Login = () => {
     }
 
     return (
-        <>
-            <div className="formContainer" >
-                <h3 >Login</h3><br />
+        <>  <div className="LoginPage">
+            <div className="LoginformContainer" >
+                <div className="loginHeader">
+                <p className="loginHeading" >Login</p>
+                <img 
+                className="LoginIcon"
+                src={LoginIcon}/>
+                </div>
+                <br />
                 <form className="form-elements">
 
                     <div className="inputfield">
@@ -39,7 +48,7 @@ const Login = () => {
                         <input
                             className="forminput"
                             type="email"
-                            placeholder="Enter yor email"
+                            placeholder="Enter your email"
                             value={email}
                             onChange={(e) => { setEmail(e.target.value) }}
                         />
@@ -50,7 +59,7 @@ const Login = () => {
                         <input
                             className="forminput"
                             type="password"
-                            placeholder="Enter yor password"
+                            placeholder="Enter your password"
                             value={password}
                             onChange={(e) => { setPassword(e.target.value) }}
                         />
@@ -67,9 +76,12 @@ const Login = () => {
                 <br />
                 {errors && <p className="signupErrors">{errors}<br /></p>}
                 {validUser && <Redirect to="/" ></Redirect>}
-                <p className="loginFooter">Not registered yet? <Link to="/Signup"> Create an Account</Link> </p>
+                <div className="loginFooter">
+                   <p> Not registered yet? </p>
+                    <Link to="/Signup"> Create an Account</Link> </div>
             </div>
-
+           
+</div>
         </>
     );
 }

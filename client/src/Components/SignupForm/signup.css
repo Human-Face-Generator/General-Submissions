@@ -1,16 +1,66 @@
+.signupPage{
+    display: flex;
+    flex-direction:row;   
+    margin: auto;
+    padding:3%;
+    min-height:550px;
+    background-image: url('./images/backgroundImg.jpg');
+}
+
 .signupHeading{
-    font-size:25px;
+    display:flex;
+    align-items:flex-start;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:40px;
+}
+.signupImg{
+     width: 50%;
+     margin-top:30%;
+     margin-left: 10%;
+}
+
+.ImgContainer{
+    display:flex;
+    align-items:flex-start;   
+    min-height:800px;
+    width:180%;
+    border-radius: 10%;
+    background-color:rgb(3, 204, 223);
 }
 .formContainer{
     display:flex;
-    flex-direction:column;  
-    margin:4% auto;  
-    min-height: 300px;
-    width:30%;
-    padding:3%;
+    flex-direction:column;
+    position:relative;
+    right:20%; 
+    top:65px;
+    padding:4%;   
+    width:120%;  
+    height:650px;
+    background-color: white;
+    border-radius: 20px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 8px 20px 0 rgba(0, 0, 0, 0.2);
-    border-radius: 8px; 
 }
+
+@media screen and (max-width: 800px) {
+  .formContainer{
+      width:200%
+  }
+   .ImgContainer{
+      min-height:500px;
+   }
+   .signupImg{
+    width: 90%;
+    margin-top:60%;
+    height:40%
+    
+   }
+  .formContainer{
+      position:static;
+      min-height:500px;
+  }
+ }
+
+
 
 .form-elements{
     display:flex;
@@ -21,20 +71,21 @@
 .inputfield{
     display:flex;
     flex-direction:column;
-    min-height:70px; 
-    font-family:Georgia, 'Times New Roman', Times, serif;
+    min-height:90px; 
+    font-family: 'Roboto Condensed', sans-serif;
     font-size: 20px;
     align-items:flex-start;
     
 }
 
 .forminput{
-    border-radius: 4px;
+    border-radius: 6px;
     border-width: 1px;
     border-style: dotted;
     width: 80%;
-    min-height:35px;
+    min-height:40px;
     font-size:17px;
+    color:black;
     padding-left:5%;
     
 }
@@ -46,3 +97,4 @@
 .signupErrors{
     color:red;
 }
+

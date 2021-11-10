@@ -66,7 +66,6 @@ useEffect( ()=>{
         {!UserID ?
         <div className="getUserLoggedin">
        Hey please login and lets start by making some awesome collections
-
         </div>:
         <div className="bgsetup">
         <div className="savedImages">

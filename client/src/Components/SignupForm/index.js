@@ -4,7 +4,7 @@ import './signup.css';
 import checkFormInputs from "./formValidation";
 import { Redirect } from "react-router";
 import Axios from "axios";
-
+import SignUpImage from "./images/SignUpImage.png";
 
 const SignupForm=()=>{
 
@@ -58,10 +58,12 @@ const SignupForm=()=>{
     
    return (
        <>
-       <div className="formContainer" >
-       
+       <div className="signupPage">
+        <div className="ImgContainer">   <img className="signupImg"
+                src={SignUpImage}/>  </div>
+       <div className="formContainer" >      
         <h3 className="signupHeading">
-            Create an account to get started
+           Sign Up
         </h3>
         <br/>
         <form className="form-elements" > 
@@ -124,12 +126,14 @@ const SignupForm=()=>{
         onClick={checkfields} >
         Signup
         </Button>:<div>
-            <p>We have sent an email with a confirmation link to your email address. In order to complete the sign-up process, please click the confirmation link. Link will be valid for only <b>10 minutes</b>.<br/><br/>
-If you do not receive a confirmation email, please check your spam folder.<br/> Also, please ensure that you have entered a valid email address in our sign-up form.</p>
+            <p>We have sent an email with a confirmation link to your email address. In order to complete the sign-up process, please click the confirmation link.
+                <br/> Link will be valid for only <b>10 minutes</b>.<br/><br/>
+</p>
   {/* <Button disabled={fxn()}>Resend link</Button> */}
  </div>}
        
         </form>
+       </div>
        </div>
        </>
    );
