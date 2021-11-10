@@ -126,7 +126,7 @@ const SignupForm=()=>{
         </Button>:<div>
             <p>We have sent an email with a confirmation link to your email address. In order to complete the sign-up process, please click the confirmation link. Link will be valid for only <b>10 minutes</b>.<br/><br/>
 If you do not receive a confirmation email, please check your spam folder.<br/> Also, please ensure that you have entered a valid email address in our sign-up form.</p>
-  <Button disabled={fxn()}>Resend link</Button>
+  {/* <Button disabled={fxn()}>Resend link</Button> */}
  </div>}
        
         </form>

@@ -5,6 +5,8 @@ const User=()=>{
     localStorage.setItem("UserID",useParams().uid);
     console.log(useParams().uid);
     let history=useHistory();
+    const loggedInEvent = new CustomEvent("logged-in", {});
+    window.dispatchEvent(loggedInEvent);
     setTimeout(()=>{
         history.push("/");
     },7000);

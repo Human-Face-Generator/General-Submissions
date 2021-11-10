@@ -290,6 +290,7 @@ const CollectionList=async ({uid,collName,res})=>{
 }
 
 const verifyEmailLink=async ({uid,tokenId,res})=>{
+    try{
     const user=await SignupModel.findOne({_id:uid});
     if(!user)
     {    
@@ -306,11 +307,23 @@ const verifyEmailLink=async ({uid,tokenId,res})=>{
         {   user.status="active";
            await user.save();
            await tokenModel.deleteOne({_id:checkToken._id});
-            
+             // creating default collection for new user
+             const newColl={
+                listName:"DefaultList",
+                list:[]
+            }; 
+            await new SavedImagesModel({_id:uid,
+                lists:[newColl]
+                   }).save();
+           
             res.redirect(`http://localhost:3000/user/${user._id}`);
         }
     }
-    
+}
+      catch(err)
+      {
+          console.log(err);
+      }
 }
 
 const getRandomImages=async (res)=>{
