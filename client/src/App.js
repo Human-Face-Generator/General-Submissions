@@ -29,7 +29,7 @@ function App() {
           <Route path="/account-images"><SavedImages /></Route>
           <Route path="/signup"><Signup /></Route>
           <Route path="/login" render={(props) => <Login {...props} />} />
-          <Route path="/generateMask"><GenerateMask /></Route>
+          <Route path="/generateMask" render={(props) => <GenerateMask {...props} />}/>
           <Route path="/listImages" render={(props) => <ListImages {...props} />} />
           <Route path="/about"> <About /> </Route>
           <Route path="/contact"> <Contact /></Route>

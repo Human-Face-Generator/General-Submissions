@@ -1,7 +1,7 @@
 import './index.css';
 import classNames from './index.css';
 import classes from './Mask.module.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 // import CanvasDraw from "react-canvas-draw";
 import CanvasDraw from "../../Components/CanvasDraw";
 import { saveAs } from 'file-saver';
@@ -10,15 +10,21 @@ import { Button } from "react-bootstrap";
 import Compress from "compress.js";
 
 
-function GenerateMask() {
-
+function GenerateMask(props) {
+   
   const fetchmaskURL = "http://localhost:5000/createMask";
   const createFaceURL = "http://localhost:5000/createFace";
   const fetchrandomFaceURL = "http://799f-35-193-108-70.ngrok.io";
+  const compress = new Compress();
+
   const [customImg, setCusImg] = useState(null);
   const [randomImgFiles, setRandomImages] = useState([])
   const UserID = localStorage.getItem('UserID');
-  const compress = new Compress();
+  const [newFace, setnewFace] = useState(null);
+  const [randimage, setrandimage] = useState(null)
+  const [orimage, setorimage] = useState("null")
+  var loadableCanvas, saveableCanvas;
+
   const defaultProps = {
     onChange: null,
     loadTimeOffset: 5,
@@ -36,7 +42,7 @@ function GenerateMask() {
     immediateLoading: false,
     hideInterface: false
   };
-  const [newFace, setnewFace] = useState(null);
+  
   const [state, setState] = useState(() => {
     return {
       color: "#cc0000",
@@ -49,9 +55,7 @@ function GenerateMask() {
     }
   });
 
-  const [randimage, setrandimage] = useState(null)
-  const [orimage, setorimage] = useState("null")
-  var loadableCanvas, saveableCanvas;
+
 
   const fetchrandomFace = async (event) => {
     let response = await fetch(fetchrandomFaceURL
@@ -81,11 +85,12 @@ function GenerateMask() {
 
   }
 
-  const fetchmask = async (event) => {
-    localStorage.setItem("orimage", window.URL.createObjectURL(event.target.files[0]))
-    setorimage(localStorage.getItem("orimage"))
+  const fetchmask = async (file) => {
+    console.log(file)
+     localStorage.setItem("orimage", window.URL.createObjectURL(file));
+     setorimage(localStorage.getItem("orimage"));
     var formData = new FormData();
-    formData.append("file", event.target.files[0])
+    formData.append("file",file)
     // console.log(formData.get("file"))
     let response = await fetch(fetchmaskURL, {
       'method': 'POST',
@@ -167,10 +172,22 @@ function GenerateMask() {
       formdata.append("randomImages", img);
 
     }
-    console.log(formdata)
+    //console.log(formdata)
     await Axios.post(`http://localhost:3004/uploadRandomImgs`, formdata).then((res) =>
       console.log(res)).catch(err => console.log(err));
   }
+
+  useEffect(async ()=>{
+    if( props.location.state && props.location.state.RandomimgURL)
+    {
+       const image=await fetch(props.location.state.RandomimgURL);
+       const imgblob=await image.blob();
+       const file=new File([imgblob],"randomImage");
+       //console.log(file);
+       await fetchmask(file);
+    }
+  },[])
+
 
   return (
     <div className="App">
@@ -194,7 +211,7 @@ function GenerateMask() {
         <div className={classNames.tools}>
           <input
             type="file"
-            onChange={fetchmask}
+            onChange={(event)=>fetchmask(event.target.files[0])}
             className={classes['choose-file']}
           />
           <br />

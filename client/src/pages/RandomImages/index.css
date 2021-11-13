@@ -1,21 +1,42 @@
+.Rpage{
+    background-image: url('../Login/images/backgroundImg2.jpg');
+    padding:2%;
+}
+
 .Randomimgpage{
      display: flex;
      flex-direction:column;
-     margin:2% auto;
+     margin: auto;
+     
      padding:15px;
-     width:90%;
+     width:92%;
+     background-color:white;
      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 8px 20px 0 rgba(0, 0, 0, 0.2);
 }
 .RandomPageHeading{
     color:rgb(40, 136, 226);
+    font-size: 250%;
+}
+
+.sub-heading{
+    font-size:160%;
 }
 .RandomImg{
     width:200px;
     height:200px;
     margin:1% ;
     border-radius: 4%;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 8px 20px 0 rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 12px 24px 0 rgba(0, 0, 0, 0.2);
 }
+
+.RandomImg:hover{
+    transform: scale(1.1);
+    transition:all 0.2s linear;
+    box-shadow: 0 16px 32px 0 rgba(0, 0, 0, 0.2), 0 16px 29px 0 rgba(0, 0, 0, 0.2);
+
+}
+
 .RandomimgContainer{
     display:flex;
     flex-direction: row;

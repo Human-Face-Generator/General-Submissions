@@ -68,6 +68,13 @@ create a photo-realistic face from scratch.</p>
         That’s the number of unique faces you can craft in our app. Seriously, technically nothing can stop you.
         </p>
       </div>
+
+      <div className="homePage-footer">
+      <p className="footerText3">So go ahead, Create someone</p>
+      <Button className="footer-btn" 
+               onClick={()=>history.push('/generateMask')}>
+        Create a Person</Button>
+      </div>
     </div>
   );
 }

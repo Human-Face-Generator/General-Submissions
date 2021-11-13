@@ -4,6 +4,7 @@ import {useHistory,Redirect} from "react-router";
 import Axios from 'axios';
 import {Button} from "react-bootstrap";
 import deleteIcon from "./images/deleteIcon.png";
+import smileIcon from './images/smileIcon.png';
 
 const SavedImages=()=>{
     
@@ -66,6 +67,7 @@ useEffect( ()=>{
         {!UserID ?
         <div className="getUserLoggedin">
        Hey please login and lets start by making some awesome collections
+      <br/><br/>  <img className="smileicon" src={smileIcon}/>
         </div>:
         <div className="bgsetup">
         <div className="savedImages">

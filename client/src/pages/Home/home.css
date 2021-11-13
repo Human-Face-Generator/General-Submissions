@@ -26,6 +26,7 @@
 .footerText1{
   font-size: 60px;
   font-weight: 800;
+  padding-bottom: 1%;
   background: linear-gradient(-17deg, #48ff00 10%,rgb(18, 22, 240) 25%,rgb(0, 195, 255) 50%,rgb(255, 0, 149) 75%, #06f125 100%);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
@@ -134,3 +135,20 @@ opacity:0.1
   font-size: 150%;
 }
 
+.homePage-footer{
+  padding: 4%;
+
+  font-size:150%;
+  display: flex;
+  flex-direction:column;
+  align-items: center;
+  background-color:rgb(114, 150, 230);
+}
+
+.footer-btn{
+  width:15%;
+}
+
+.footerText3{
+  font-size: 190%;;
+}

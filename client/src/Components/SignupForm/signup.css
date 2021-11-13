@@ -4,8 +4,8 @@
     margin: auto;
     padding:3%;
     min-height:550px;
-    background-image: url('./images/backgroundImg.jpg');
-}
+    /* background-image: url('./images/backgroundImg.jpg'); */
+   }
 
 .signupHeading{
     display:flex;
@@ -35,10 +35,10 @@
     top:65px;
     padding:4%;   
     width:120%;  
-    height:650px;
+    height:680px;
     background-color: white;
     border-radius: 20px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 8px 20px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 12px 0 rgba(0, 0, 0, 0.2), 0 8px 20px 0 rgba(0, 0, 0, 0.2);
 }
 
 @media screen and (max-width: 800px) {
