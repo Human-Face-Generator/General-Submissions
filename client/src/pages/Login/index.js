@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Axios from "axios";
 import './index.css';
 import LoginIcon from './images/LoginIcon.png';
-
+import google_icon from "./images/google_icon.png";
 
 const Login = () => {
    
@@ -15,8 +15,9 @@ const Login = () => {
     const [validUser, setValidity] = useState(false);
     const [errors, setErrors] = useState("");
     let history = useHistory();
-    const checkUser = () => {
-        Axios.post("http://localhost:3004/LoginInfo", { email, password }).then((res) => {
+
+    const checkUser =async () => {
+       await Axios.post("http://localhost:3004/LoginInfo", { email, password }).then((res) => {
 
             if (res.data.message === "Valid User") {
                 localStorage.setItem("UserID", res.data.uid);
@@ -30,7 +31,13 @@ const Login = () => {
 
         }).catch((err) => { console.log(err) });
     }
-
+    
+    const googleSignUp=async ()=>{
+        //await Axios.get('http://localhost:3004/auth/google');
+        window.open('http://localhost:3004/auth/google', "_self");
+    
+    }
+    
     return (
         <>  <div className="LoginPage">
             <div className="LoginformContainer" >
@@ -67,7 +74,7 @@ const Login = () => {
                     <br />
 
                     <Button className="signupbtn" variant="primary" size="sm"
-                        onClick={checkUser} >
+                        onClick={async()=>await checkUser()} >
                         Login
                     </Button>
 
@@ -79,7 +86,13 @@ const Login = () => {
                 <div className="loginFooter">
                    <p> Not registered yet? </p>
                     <Link to="/Signup"> Create an Account</Link> </div>
+                    <p>Or Sign Up using</p>
+                    <span><img src={google_icon} 
+                    className="google_icon"
+                         onClick={async()=> await googleSignUp()}/></span>
+
             </div>
+            
            
 </div>
         </>

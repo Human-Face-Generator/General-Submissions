@@ -1,7 +1,8 @@
 import {useParams} from 'react-router-dom';
 import {useHistory,Link} from 'react-router-dom';
+
 const User=()=>{
-      
+    
     localStorage.setItem("UserID",useParams().uid);
     console.log(useParams().uid);
     let history=useHistory();

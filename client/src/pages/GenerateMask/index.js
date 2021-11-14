@@ -190,9 +190,9 @@ function GenerateMask(props) {
 
 
   return (
-    <div className="App">
-
-      <div className={classes['main-box']}>
+    <div className="maskPageContainer">
+     
+      <div className='main-box'>
         <h2>React Canvas Draw</h2>
 
         <div className={classes.randomimage}>
@@ -339,7 +339,7 @@ function GenerateMask(props) {
 
       </div>
     </div>
-
+  
   );
 }
 

@@ -1,40 +1,46 @@
-import { Strategy as LocalStrategy } from "passport-local";
-import bcrypt from "bcrypt";
+import passport from "passport";
+import {OAuth2Strategy as GoogleStrategy} from "passport-google-oauth";
+import SignupModel from "./models/Signup.js";
 
+passport.serializeUser(function(user, done) { // user to id so that info can be retrieved later 
+  done(null, user.id);
+});
 
-const initialize=(passport)=>{
-    
-    const authenticateUser=(email,password,done)=>{
+passport.deserializeUser(function(id, done) { // user id to user info
+    done(null, id);
+});
 
-    // will call done fxn when we are done authenticatng the user 
-    // done(err if any, user found or not, message) and here error means sys err like ,user not found is not a error
-    const user=getUserByEmail(email);
-    if(user === null)
-    {
-        return done(null,false,{message:"No user with that email-id"})
-    }
+passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL:"http://localhost:3004/auth/google/callback"
+},
+  async (accessToken, refreshToken, profile, done)=> {
+      // will be called after authentication
+      try{
 
-    try{
-        if( await bcrypt.compare(password,user.password))
-        {
-          return done(null,user);
-        }
-        else
-        {
-          return done(null,false,{message:"Incorrect password"})
-        }
-    } catch(err){
-        return done(err);
-    }
+    //console.log(profile._json);
+      var user= await SignupModel.findOne({email: profile._json.email});  
+     if(user)
+      {   
+        user.status="active";
+        
+        user.google_id=profile.id;
+        await user.save();
+      }
+      else
+     {const newUser=await new SignupModel({
+        username: profile._json.name,
+        email: profile._json.email,
+        status:'active',
+        google_id:profile.id
+    }).save();
+  }
 
-    }
-
-    passport.use(new LocalStrategy({username:'email'}),
-        authenticateUser);
-    
-    passport.serializeUser((user,done)=>{})// serialize user to store inside the session  
-    passport.deserializeUser((id,done)=>{})
-    
+    return done(null,profile);
 }
-
-export default initialize;
+  catch(err)     
+  {
+    return done(err)
+  }
+}));

@@ -26,6 +26,7 @@
     min-height:450px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 8px 20px 0 rgba(0, 0, 0, 0.2);
    background-color: white;
+   border-radius: 20px;
 }
 
 #selectedList{
@@ -93,7 +94,7 @@
 
 .bgsetup{
     padding:1%;
-    background-color:aliceblue;
+   background-image: url('../Login/images/backgroundImg.jpg');
 }
 
 .getUserLoggedin{

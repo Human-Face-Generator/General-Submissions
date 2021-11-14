@@ -1,32 +1,31 @@
 import express from "express";
 import cors from "cors";
 import bcrypt from "bcrypt";
-import  "./Connection/mongodb.js";
+import crypto from "crypto";
+import passport from "passport";
+import cookieSession from "cookie-session";
+
+import  "./Connection/mongodb.js";// must be called before others 
 import {upload,gfs,gridFSBucket} from "./Connection/multer_GridFS.js";
+import "./passport-config.js";
 import SignupModel from "./models/Signup.js";
 import SavedImagesModel from "./models/SavedImages.js";
 import tokenModel from "./models/userToken.js";
 import RandomImgModel from "./models/RandomImages.js"
 import sendEmail from "./utils/Email.js";
-import crypto from "crypto";
-// import passport from "passport";
-// import flash from "express-flash";
-// import session from "express-session";
-// import initialize from "./passport-config.js";
-// initialize(passport,email=>users.find(user=> email === user.email));
+
 
 const app=express();
 app.use(express.json());
 app.use(cors());
-// app.use(flash());
-// app.use(session({
-//     secret:process.env.SESSION_SECRET,
-//     resave:false,
-//     saveUninitialized: false
-// }));
-// app.use(passport.initialize());
-// app.use(passport.session());
 
+app.use(cookieSession({
+    name: 'hfg-session',
+    keys: ['key1', 'key2']
+  }))
+   
+app.use(passport.initialize());
+app.use(passport.session());
 
 const addNewUser=async ({req,res})=>{
     try{       
@@ -77,7 +76,7 @@ const addNewUser=async ({req,res})=>{
                 await SignupModel.deleteOne({_id:user._id});
                 //res.send("Hey, you have not confirmed your account. Click here to retry")
               }
-         },5*60000)
+         },10*60000)
     } 
     else
     {
@@ -340,6 +339,14 @@ const getRandomImages=async (res)=>{
     }
 }
 
+const listenToGoogleCallback=async (req,res)=>{
+    const google_id=req.user.id;
+      console.log(google_id)
+     const user= await SignupModel.findOne({google_id},{_id:1});
+    res.redirect(`http://localhost:3000/user/${user._id}`);
+}
+
+
 // adding New User info to database
 app.post("/signupInfo",async (req,res)=>{
     await addNewUser({req,res});   
@@ -411,6 +418,15 @@ app.get("/user-verification/:uid/:token",async (req,res)=>{
 app.get("/obtain-Random-images",async(req,res)=>{
     await getRandomImages(res);
 });
+
+// we will be directing user to /google for authentication
+app.get('/auth/google', passport.authenticate('google', { scope: ['profile','email'] }));
+
+// after authentication user will be directed to this uri by google
+app.get('/auth/google/callback',  passport.authenticate('google',
+ { failureRedirect: 'http://localhost:3000/login' }),
+  async (req, res) =>await listenToGoogleCallback(req,res));
+
 
 app.listen(3004,()=>{
     console.log("Server running at 3004");

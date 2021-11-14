@@ -11,7 +11,8 @@ const UseAreas=()=>{
 
     return (
         <>
-        <div className="Usecases">
+        <div className={classes["useCasePage"]}>
+        <div className={classes["Usecases"]}>
          <div id="heading">
            <center>
             <h2 className={classes.h1tag}>Where Generated Photos are Used</h2>
@@ -49,7 +50,7 @@ const UseAreas=()=>{
             ))}
          </div>
 
-         
+         </div>
 
         </div>
         </>
