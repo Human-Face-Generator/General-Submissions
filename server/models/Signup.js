@@ -5,8 +5,8 @@ const SignupSchema=new mongoose.Schema({
     email:{type:String,unique:true,lowercase:true},
     password:String,
     status:{type:String,default:"pending"},
-    google_id:String
-    
+    google_id:String,
+    facebook_id:String  
 });
 
 const SignupModel=mongoose.model("NewUserInfo",SignupSchema);

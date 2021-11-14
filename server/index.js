@@ -343,7 +343,42 @@ const listenToGoogleCallback=async (req,res)=>{
     const google_id=req.user.id;
       console.log(google_id)
      const user= await SignupModel.findOne({google_id},{_id:1});
-    res.redirect(`http://localhost:3000/user/${user._id}`);
+     const uid=user._id;
+
+   const isnewuser= await SavedImagesModel.findOne({_id:uid});
+   
+   if(!isnewuser)
+   {  const newColl={
+        listName:"DefaultList",
+        list:[]
+    }; 
+    await new SavedImagesModel({_id:uid,
+        lists:[newColl]
+           }).save();
+    }
+
+    res.redirect(`http://localhost:3000/user/${uid}`);
+}
+
+const listenTofbCallback=async (req,res)=>{
+    const facebook_id=req.user.id;
+      //console.log(facebook_id)
+     const user= await SignupModel.findOne({facebook_id:facebook_id},{_id:1});
+     const uid=user._id;
+
+   const isnewuser= await SavedImagesModel.findOne({_id:uid});
+   
+   if(!isnewuser)
+   {  const newColl={
+        listName:"DefaultList",
+        list:[]
+    }; 
+    await new SavedImagesModel({_id:uid,
+        lists:[newColl]
+           }).save();
+    }
+
+    res.redirect(`http://localhost:3000/user/${uid}`);
 }
 
 
@@ -427,6 +462,13 @@ app.get('/auth/google/callback',  passport.authenticate('google',
  { failureRedirect: 'http://localhost:3000/login' }),
   async (req, res) =>await listenToGoogleCallback(req,res));
 
+// fb authentication
+app.get('/auth/fb', passport.authenticate('facebook',{ scope:['email']})); // scope is imp here,eg. profile is not an option here
+
+// Facebook will redirect the user to this URL after approval.  
+app.get('/auth/fb/callback',passport.authenticate('facebook',
+ { failureRedirect: '/login' }),
+ async (req,res)=>await listenTofbCallback(req,res));
 
 app.listen(3004,()=>{
     console.log("Server running at 3004");

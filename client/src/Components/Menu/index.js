@@ -13,6 +13,7 @@ const Menu = () => {
 
   const loggedInEventHandler = () => {
     //setCurrUser(localStorage.getItem("UserID"));
+    console.log("logged in event called")
     setLoggedIn(localStorage.getItem("UserID"));
   }
   const loggedOutEventHandler = () => {
@@ -29,9 +30,11 @@ const Menu = () => {
   useEffect(() => {
     window.addEventListener("logged-in", loggedInEventHandler);
     window.addEventListener("logged-out", loggedOutEventHandler);
+   
     return () => {
       window.removeEventListener("logged-in", loggedInEventHandler);
       window.removeEventListener("logged-out", loggedOutEventHandler);
+      
     }
   });
 

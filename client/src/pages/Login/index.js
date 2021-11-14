@@ -5,6 +5,7 @@ import Axios from "axios";
 import './index.css';
 import LoginIcon from './images/LoginIcon.png';
 import google_icon from "./images/google_icon.png";
+import facebook_icon from "./images/facebook_icon.png";
 
 const Login = () => {
    
@@ -33,9 +34,12 @@ const Login = () => {
     }
     
     const googleSignUp=async ()=>{
-        //await Axios.get('http://localhost:3004/auth/google');
-        window.open('http://localhost:3004/auth/google', "_self");
-    
+        //await Axios.get('http://localhost:3004/auth/google'); // cors error
+        window.open('http://localhost:3004/auth/google', "_self");   
+    }
+
+    const fbSignUp=async ()=>{    
+        window.open('http://localhost:3004/auth/fb', "_self");   
     }
     
     return (
@@ -85,12 +89,21 @@ const Login = () => {
                 {validUser && <Redirect to="/" ></Redirect>}
                 <div className="loginFooter">
                    <p> Not registered yet? </p>
-                    <Link to="/Signup"> Create an Account</Link> </div>
+                    <Link to="/Signup"> Create an Account</Link> 
+                </div>
+                <div className="loginFooter2">
                     <p>Or Sign Up using</p>
+                    <div className="login-icons">
                     <span><img src={google_icon} 
-                    className="google_icon"
-                         onClick={async()=> await googleSignUp()}/></span>
-
+                    className="signup_icon"
+                         onClick={async()=> await googleSignUp()}/>
+                    </span>
+                    <span><img src={facebook_icon} 
+                    className="signup_icon"
+                         onClick={async()=> await fbSignUp()}/>
+                    </span>
+                    </div>
+                </div>
             </div>
             
            

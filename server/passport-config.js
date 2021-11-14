@@ -1,5 +1,6 @@
 import passport from "passport";
 import {OAuth2Strategy as GoogleStrategy} from "passport-google-oauth";
+import {Strategy as FacebookStrategy} from 'passport-facebook'
 import SignupModel from "./models/Signup.js";
 
 passport.serializeUser(function(user, done) { // user to id so that info can be retrieved later 
@@ -44,3 +45,40 @@ passport.use(new GoogleStrategy({
     return done(err)
   }
 }));
+
+
+
+passport.use(new FacebookStrategy({
+    clientID: process.env.FACEBOOK_APP_ID,
+    clientSecret: process.env.FACEBOOK_APP_SECRET,
+    callbackURL: "http://localhost:3004/auth/fb/callback",
+    profileFields: ['id', 'emails', 'name'] 
+  },
+  async (accessToken, refreshToken, profile, done)=> {
+       
+    try{
+
+      //console.log(profile);
+        var user= await SignupModel.findOne({email: profile._json.email});  
+       if(user)
+        {   
+          user.status="active";         
+          user.facebook_id=profile.id;
+          await user.save();
+        }
+        else
+       {const newUser=await new SignupModel({
+          username: profile._json.first_name+profile._json.last_name,
+          email: profile._json.email,
+          status:'active',
+          facebook_id:profile.id
+      }).save();
+    }
+  
+      return done(null,profile);
+  }
+    catch(err)     
+    { console.log(err)
+      return done(err)
+    }
+  }));

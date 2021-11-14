@@ -6,6 +6,7 @@
 }
 
 .homePageBody {
+  
 	background: linear-gradient(-45deg, #8abcd8, #acd1e7, #b1e1f3, #d7eff3);
 	background-size: 400% 400%;
 	animation: gradient 5s ease infinite;

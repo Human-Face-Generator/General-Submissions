@@ -14,8 +14,19 @@
 .LoginIcon{
     width:40%;
 }
-.google_icon{
+.login-icons{
+    display: flex;
+    flex-direction:row;
+    width:40%;
+    justify-content: space-between;
+}
+.signup_icon{
     cursor: pointer;
+    width:120%;
+}
+.signup_icon:hover{
+    transform:scale(1.1);
+    transition:all 0.2 sec ;
 }
 .loginFooter{
     font-size:19px;
@@ -27,6 +38,16 @@
     font-weight: 450;
     width:82%;
 }
+.loginFooter2{
+    font-size:20px;
+    display: flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content: space-between;
+    font-weight: 450;
+    width:82%;
+}
+
 
 .LoginPage{
    
