@@ -5,6 +5,8 @@ import { Button } from "react-bootstrap";
 import Carousel from 'react-bootstrap/Carousel'
 import Axios from "axios";
 import { useState, useEffect } from "react";
+import Hfg from "./images/Hfg.png";
+
 const Home = () => {
   const history = useHistory();
   const [imgUrls, setUrls] = useState([]);
@@ -29,7 +31,9 @@ const Home = () => {
     <div className="homePageBody">
       <div className="homepage">
 
-        <div id="heading"> A unique real-time face generator.
+        <div id="heading" >
+          <p> A unique real-time face generator.</p>
+         {/* <span> <img className="hfglogo" src={Hfg}/></span> */}
         </div>
 {/* 
         <div className="btns">

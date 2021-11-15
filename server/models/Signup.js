@@ -6,7 +6,8 @@ const SignupSchema=new mongoose.Schema({
     password:String,
     status:{type:String,default:"pending"},
     google_id:String,
-    facebook_id:String  
+    facebook_id:String,
+    twitter_id:String
 });
 
 const SignupModel=mongoose.model("NewUserInfo",SignupSchema);

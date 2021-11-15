@@ -382,6 +382,28 @@ const listenTofbCallback=async (req,res)=>{
 }
 
 
+const listenToTwitterCallback=async (req,res)=>{
+    const twitter_id=req.user.id;
+    
+     const user= await SignupModel.findOne({twitter_id},{_id:1});
+     const uid=user._id;
+
+   const isnewuser= await SavedImagesModel.findOne({_id:uid});
+   
+   if(!isnewuser)
+   {  const newColl={
+        listName:"DefaultList",
+        list:[]
+    }; 
+    await new SavedImagesModel({_id:uid,
+        lists:[newColl]
+           }).save();
+    }
+
+    res.redirect(`http://localhost:3000/user/${uid}`);
+}
+
+
 // adding New User info to database
 app.post("/signupInfo",async (req,res)=>{
     await addNewUser({req,res});   
@@ -457,7 +479,7 @@ app.get("/obtain-Random-images",async(req,res)=>{
 // we will be directing user to /google for authentication
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile','email'] }));
 
-// after authentication user will be directed to this uri by google
+// after authentication google will call this uri
 app.get('/auth/google/callback',  passport.authenticate('google',
  { failureRedirect: 'http://localhost:3000/login' }),
   async (req, res) =>await listenToGoogleCallback(req,res));
@@ -465,10 +487,20 @@ app.get('/auth/google/callback',  passport.authenticate('google',
 // fb authentication
 app.get('/auth/fb', passport.authenticate('facebook',{ scope:['email']})); // scope is imp here,eg. profile is not an option here
 
-// Facebook will redirect the user to this URL after approval.  
+// Facebook will call this URL after approval.  
 app.get('/auth/fb/callback',passport.authenticate('facebook',
- { failureRedirect: '/login' }),
+ { failureRedirect: 'http://localhost:3000/login' }),
  async (req,res)=>await listenTofbCallback(req,res));
+
+// twitter authentication
+app.get('/auth/twitter', passport.authenticate('twitter',{scope:['email']}));
+
+// twitter will call this URL after approval.  
+app.get('/auth/twitter/callback', passport.authenticate('twitter',
+ { failureRedirect: 'http://localhost:3000/login' }),
+ async (req,res)=>await listenToTwitterCallback(req,res));
+
+
 
 app.listen(3004,()=>{
     console.log("Server running at 3004");

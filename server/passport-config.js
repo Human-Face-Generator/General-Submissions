@@ -1,6 +1,7 @@
 import passport from "passport";
 import {OAuth2Strategy as GoogleStrategy} from "passport-google-oauth";
-import {Strategy as FacebookStrategy} from 'passport-facebook'
+import {Strategy as FacebookStrategy} from 'passport-facebook';
+import {Strategy as TwitterStrategy} from 'passport-twitter';
 import SignupModel from "./models/Signup.js";
 
 passport.serializeUser(function(user, done) { // user to id so that info can be retrieved later 
@@ -82,3 +83,43 @@ passport.use(new FacebookStrategy({
       return done(err)
     }
   }));
+
+
+  passport.use(new TwitterStrategy({
+    consumerKey: process.env.TWITTER_CONSUMER_KEY,
+    consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
+    callbackURL: "http://localhost:3004/auth/twitter/callback",
+    includeEmail:true
+  },
+  async (accessToken, refreshToken, profile, done)=> {
+       
+    try{
+
+      //console.log(profile);
+      const email=profile.emails[0].value;
+        var user= await SignupModel.findOne({email});  
+       if(user)
+        {   
+          user.status="active";         
+          user.twitter_id=profile.id;
+          await user.save();
+        }
+        else
+       {const newUser=await new SignupModel({
+          username: profile.displayName,
+          email:email,
+          status:'active',
+          twitter_id:profile.id
+      }).save();
+    }
+  
+      return done(null,profile);
+  }
+    catch(err)     
+    { console.log(err)
+      return done(err)
+    }
+  }));
+
+
+

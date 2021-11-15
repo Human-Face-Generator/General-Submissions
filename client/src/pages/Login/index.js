@@ -6,6 +6,8 @@ import './index.css';
 import LoginIcon from './images/LoginIcon.png';
 import google_icon from "./images/google_icon.png";
 import facebook_icon from "./images/facebook_icon.png";
+import twitter_icon from "./images/twitter_icon.png";
+
 
 const Login = () => {
    
@@ -40,6 +42,10 @@ const Login = () => {
 
     const fbSignUp=async ()=>{    
         window.open('http://localhost:3004/auth/fb', "_self");   
+    }
+
+    const twitterSignUp=async ()=>{    
+        window.open('http://localhost:3004/auth/twitter', "_self");   
     }
     
     return (
@@ -101,6 +107,10 @@ const Login = () => {
                     <span><img src={facebook_icon} 
                     className="signup_icon"
                          onClick={async()=> await fbSignUp()}/>
+                    </span>
+                    <span><img src={twitter_icon} 
+                    className="signup_icon"
+                         onClick={async()=> await twitterSignUp()}/>
                     </span>
                     </div>
                 </div>
