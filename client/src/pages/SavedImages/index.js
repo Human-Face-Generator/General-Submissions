@@ -5,6 +5,7 @@ import Axios from 'axios';
 import {Button} from "react-bootstrap";
 import deleteIcon from "./images/deleteIcon.png";
 import smileIcon from './images/smileIcon.png';
+import Modal from './Modal' ;
 
 const SavedImages=()=>{
     
@@ -17,6 +18,9 @@ const SavedImages=()=>{
    const UserID=localStorage.getItem('UserID');
    console.log(UserID);
    
+   const [modalState, setModalState] = useState({modal: false, curName: ""}) ;
+   const [currList, setCurrList] = useState({}) ;
+
    const addCollName= ()=>{
 
       console.log("coll name obtained");
@@ -62,6 +66,27 @@ useEffect( ()=>{
   
 },[addlist,colldeleted])
 
+
+const changeListName = (inputName) => {
+   const i = ImageLists.findIndex(o => o.listName===modalState.curName) ;
+   
+   let newArr = [...ImageLists] ;
+   newArr[i].listName = inputName ;
+   
+   setLists(newArr) ;
+   listNames[i] = inputName;
+
+   hideModalHandler(false) ;
+}
+
+const showModalHandler = (p) => {
+   setModalState({modal: true, curName: p}) ;
+}
+
+const hideModalHandler = () => {
+   setModalState(false) ;
+}
+
     return (
         <>
         {!UserID ?
@@ -86,10 +111,21 @@ useEffect( ()=>{
                   }}>
                   {list.listName}
                   </p>
+                  {/* <a href="" onClick={showModalHandler}>Rename</a> */}
+                  <p onClick={() => showModalHandler(list.listName)}>Rename</p>
+                  {modalState.modal && 
+                     <Modal 
+                     current={modalState.curName}
+                     changeListName={changeListName}
+                     onClose={hideModalHandler}  
+                  />}
                   <img className="deleteicon" src={deleteIcon} onClick={()=>deleteColl(list.listName)}/>
                   </div>
                )
             })}
+            
+            
+
            </div>
            <br/>
 
