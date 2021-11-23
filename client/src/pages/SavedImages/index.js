@@ -1,4 +1,5 @@
 import './SavedImages.css';
+import classes from "./Modal.module.css" ;
 import {useState,useEffect} from "react";
 import {useHistory,Redirect} from "react-router";
 import Axios from 'axios';
@@ -112,14 +113,26 @@ const hideModalHandler = () => {
                   {list.listName}
                   </p>
                   {/* <a href="" onClick={showModalHandler}>Rename</a> */}
-                  <p onClick={() => showModalHandler(list.listName)}>Rename</p>
+            
+                  
+                  <div>
+                    <button 
+                     className="box btnn"
+                     onClick={() => showModalHandler(list.listName)
+                    }>
+                     Rename
+                    </button>
+                    <img className="deleteicon" src={deleteIcon} onClick={()=>deleteColl(list.listName)}/>
+
+                  </div>
+
                   {modalState.modal && 
                      <Modal 
                      current={modalState.curName}
                      changeListName={changeListName}
                      onClose={hideModalHandler}  
                   />}
-                  <img className="deleteicon" src={deleteIcon} onClick={()=>deleteColl(list.listName)}/>
+                             
                   </div>
                )
             })}
