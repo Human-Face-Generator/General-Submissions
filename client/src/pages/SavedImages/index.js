@@ -1,10 +1,12 @@
 import './SavedImages.css';
+import classes from "./Modal.module.css" ;
 import {useState,useEffect} from "react";
 import {useHistory,Redirect} from "react-router";
 import Axios from 'axios';
 import {Button} from "react-bootstrap";
 import deleteIcon from "./images/deleteIcon.png";
 import smileIcon from './images/smileIcon.png';
+import Modal from './Modal' ;
 
 const SavedImages=()=>{
     
@@ -17,6 +19,9 @@ const SavedImages=()=>{
    const UserID=localStorage.getItem('UserID');
    console.log(UserID);
    
+   const [modalState, setModalState] = useState({modal: false, curName: ""}) ;
+   const [currList, setCurrList] = useState({}) ;
+
    const addCollName= ()=>{
 
       console.log("coll name obtained");
@@ -62,6 +67,27 @@ useEffect( ()=>{
   
 },[addlist,colldeleted])
 
+
+const changeListName = (inputName) => {
+   const i = ImageLists.findIndex(o => o.listName===modalState.curName) ;
+   
+   let newArr = [...ImageLists] ;
+   newArr[i].listName = inputName ;
+   
+   setLists(newArr) ;
+   listNames[i] = inputName;
+
+   hideModalHandler(false) ;
+}
+
+const showModalHandler = (p) => {
+   setModalState({modal: true, curName: p}) ;
+}
+
+const hideModalHandler = () => {
+   setModalState(false) ;
+}
+
     return (
         <>
         {!UserID ?
@@ -86,10 +112,33 @@ useEffect( ()=>{
                   }}>
                   {list.listName}
                   </p>
-                  <img className="deleteicon" src={deleteIcon} onClick={()=>deleteColl(list.listName)}/>
+                  {/* <a href="" onClick={showModalHandler}>Rename</a> */}
+            
+                  
+                  <div>
+                    <button 
+                     className="box btnn"
+                     onClick={() => showModalHandler(list.listName)
+                    }>
+                     Rename
+                    </button>
+                    <img className="deleteicon" src={deleteIcon} onClick={()=>deleteColl(list.listName)}/>
+
+                  </div>
+
+                  {modalState.modal && 
+                     <Modal 
+                     current={modalState.curName}
+                     changeListName={changeListName}
+                     onClose={hideModalHandler}  
+                  />}
+                             
                   </div>
                )
             })}
+            
+            
+
            </div>
            <br/>
 
