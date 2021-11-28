@@ -76,7 +76,7 @@ const addNewUser=async ({req,res})=>{
                 await SignupModel.deleteOne({_id:user._id});
                 //res.send("Hey, you have not confirmed your account. Click here to retry")
               }
-         },10*60000)
+         },600000)
     } 
     else
     {
@@ -403,6 +403,24 @@ const listenToTwitterCallback=async (req,res)=>{
     res.redirect(`http://localhost:3000/user/${uid}`);
 }
 
+const updateCollName=async (req,res)=>{
+      const uid=req.body.uid;
+      const currName=req.body.currName;
+      const newName=req.body.newName;
+      
+   try{
+    const doc=await SavedImagesModel.findOne({_id:uid,'lists.listName':currName},"lists.$");
+    console.log(doc);
+    const newColl={
+        listName:newName,
+        list:doc.lists[0].list
+    };
+    await SavedImagesModel.findByIdAndUpdate(uid,{$pull:{lists:{listName:currName}}});
+    await SavedImagesModel.findByIdAndUpdate(uid,{$push:{lists:newColl}});
+    res.send("coll name updated");}
+    catch(err)
+    { console.log(err)}
+}
 
 // adding New User info to database
 app.post("/signupInfo",async (req,res)=>{
@@ -500,6 +518,10 @@ app.get('/auth/twitter/callback', passport.authenticate('twitter',
  { failureRedirect: 'http://localhost:3000/login' }),
  async (req,res)=>await listenToTwitterCallback(req,res));
 
+// update coll name 
+app.post('/updateCollName',async (req,res)=>{
+    await updateCollName(req,res);
+})
 
 
 app.listen(3004,()=>{

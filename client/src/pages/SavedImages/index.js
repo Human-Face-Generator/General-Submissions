@@ -1,12 +1,12 @@
 import './SavedImages.css';
-import classes from "./Modal.module.css" ;
 import {useState,useEffect} from "react";
 import {useHistory,Redirect} from "react-router";
 import Axios from 'axios';
 import {Button} from "react-bootstrap";
 import deleteIcon from "./images/deleteIcon.png";
 import smileIcon from './images/smileIcon.png';
-import Modal from './Modal' ;
+// import rename_icon from "./images/rename_icon.png";
+import RenameModal from '../../Containers/RenameModal/index.js' ;
 
 const SavedImages=()=>{
     
@@ -17,10 +17,10 @@ const SavedImages=()=>{
    const [colldeleted,setdelstatus]=useState(false);
    const history=useHistory();
    const UserID=localStorage.getItem('UserID');
+   const [collNameUpdated,setStatus]=useState(false);
+
    console.log(UserID);
-   
-   const [modalState, setModalState] = useState({modal: false, curName: ""}) ;
-   const [currList, setCurrList] = useState({}) ;
+
 
    const addCollName= ()=>{
 
@@ -65,28 +65,8 @@ useEffect( ()=>{
             setLists(data); }                
      }).catch((err)=>{console.log(err)});
   
-},[addlist,colldeleted])
+},[addlist,colldeleted,collNameUpdated])
 
-
-const changeListName = (inputName) => {
-   const i = ImageLists.findIndex(o => o.listName===modalState.curName) ;
-   
-   let newArr = [...ImageLists] ;
-   newArr[i].listName = inputName ;
-   
-   setLists(newArr) ;
-   listNames[i] = inputName;
-
-   hideModalHandler(false) ;
-}
-
-const showModalHandler = (p) => {
-   setModalState({modal: true, curName: p}) ;
-}
-
-const hideModalHandler = () => {
-   setModalState(false) ;
-}
 
     return (
         <>
@@ -112,26 +92,12 @@ const hideModalHandler = () => {
                   }}>
                   {list.listName}
                   </p>
-                  {/* <a href="" onClick={showModalHandler}>Rename</a> */}
-            
-                  
-                  <div>
-                    <button 
-                     className="box btnn"
-                     onClick={() => showModalHandler(list.listName)
-                    }>
-                     Rename
-                    </button>
+                      
+                  <div className="iconBox">
+                   <RenameModal currColl={list.listName}
+                    changeStatus={setStatus} collStatus={collNameUpdated}/>
                     <img className="deleteicon" src={deleteIcon} onClick={()=>deleteColl(list.listName)}/>
-
                   </div>
-
-                  {modalState.modal && 
-                     <Modal 
-                     current={modalState.curName}
-                     changeListName={changeListName}
-                     onClose={hideModalHandler}  
-                  />}
                              
                   </div>
                )

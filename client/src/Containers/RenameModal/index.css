@@ -1,0 +1,17 @@
+.collnameForm{
+    display: flex;
+    flex-direction:column;
+    margin:2% auto;
+    justify-content: space-between;
+    min-height:220px;
+    width:80%;
+}
+
+.modalbtn{
+    width:80%;
+}
+
+.modalHeading{
+    font-size:25px;
+    font-family:Arial, Helvetica, sans-serif;
+}
