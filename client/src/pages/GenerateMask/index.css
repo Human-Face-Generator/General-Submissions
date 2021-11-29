@@ -29,6 +29,12 @@ background-image: url('../Login/images/backgroundImg.jpg');
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.6) 0px 5px 15px;
 }
+.randImgCont{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
 
 

@@ -14,10 +14,11 @@ function GenerateMask(props) {
    
   const fetchmaskURL = "http://localhost:5000/createMask";
   const createFaceURL = "http://localhost:5000/createFace";
-  const fetchrandomFaceURL = "http://799f-35-193-108-70.ngrok.io";
+  const fetchrandomFaceURL = "http://4241-104-198-243-137.ngrok.io";
   const compress = new Compress();
 
   const [customImg, setCusImg] = useState(null);
+  const [customrandImg, setCusrandImg] = useState(null);
   const [randomImgFiles, setRandomImages] = useState([])
   const UserID = localStorage.getItem('UserID');
   const [newFace, setnewFace] = useState(null);
@@ -58,15 +59,19 @@ function GenerateMask(props) {
 
 
   const fetchrandomFace = async (event) => {
-    let response = await fetch(fetchrandomFaceURL
+    const response = await fetch(fetchrandomFaceURL,{cache: 'no-store'}
     ).then((response) => response)
       .then(result => result)
       .catch((err) => console.error(err))
-    // console.log(response)
-    let res = await response.blob()
+    console.log(response)
+    const res = await response.blob()
 
     localStorage.setItem("randomface", window.URL.createObjectURL(res));
     setrandimage(localStorage.getItem("randomface"))
+
+    var filedata = new File([res], "randomimg", { type: 'image/jpeg' }); 
+    var resizedFileData=await resizeImageFn(filedata) ;
+    setCusrandImg(resizedFileData);
   }
 
   const fetchrandomFacezip = async (e) => {
@@ -136,9 +141,9 @@ function GenerateMask(props) {
     setnewFace(localStorage.getItem("face"))
   }
 
-  const AddtoCollection = async () => {
+  const AddtoCollection = async (Img) => {
     const formdata = new FormData();
-    formdata.append("savedimg", customImg);
+    formdata.append("savedimg", Img);
     console.log(formdata)
     await Axios.post(`http://localhost:3004/upload/${UserID}`, formdata).then((res) =>
       console.log(res)).catch(err => console.log(err));
@@ -199,7 +204,15 @@ function GenerateMask(props) {
           <button className={classes.btn} onClick={fetchrandomFace}>
             Random Image
           </button>
-          {randimage ? <img src={randimage} alt={"no image"} /> : null}
+
+          {randimage ?<div className="randImgCont"> <img src={randimage} height="256" width="256" alt={"no image"} /> 
+          
+          <Button style={{width:"256px"}} onClick={async () => await AddtoCollection(customrandImg)}>
+          Add to Default collection
+        </Button>
+        </div>
+          : null}
+          
         </div>
         <div className={classes.randomimage}>
           <button className={classes.btn} onClick={fetchrandomFacezip}>
@@ -297,7 +310,7 @@ function GenerateMask(props) {
               {newFace ?
                 <div>
                   <img src={newFace} height="256" /><br /><br />
-                  <Button onClick={async () => await AddtoCollection()}>
+                  <Button onClick={async () => await AddtoCollection(customImg)}>
                     Add to Default collection
                   </Button>
                   {/* <Button onClick={()=>saveAs(localStorage.getItem("maskImage"),"image.jpg")}>
