@@ -43,4 +43,4 @@ const storage = new GridFsStorage({
   });
 const upload = multer({ storage });
 
-export {upload,gfs,gridFSBucket};
+export {conn,upload,gfs,gridFSBucket};

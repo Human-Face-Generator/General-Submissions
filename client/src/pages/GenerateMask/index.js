@@ -2,13 +2,12 @@ import './index.css';
 import classNames from './index.css';
 import classes from './Mask.module.css';
 import { useEffect, useState } from 'react';
-// import CanvasDraw from "react-canvas-draw";
 import CanvasDraw from "../../Components/CanvasDraw";
 import { saveAs } from 'file-saver';
 import Axios from 'axios';
 import { Button } from "react-bootstrap";
 import Compress from "compress.js";
-
+import {Dropdown} from 'react-bootstrap';
 
 function GenerateMask(props) {
    
@@ -25,6 +24,8 @@ function GenerateMask(props) {
   const [randimage, setrandimage] = useState(null)
   const [orimage, setorimage] = useState("null")
   var loadableCanvas, saveableCanvas;
+  const [listNames,setNames]=useState([]);
+  
 
   const defaultProps = {
     onChange: null,
@@ -141,11 +142,11 @@ function GenerateMask(props) {
     setnewFace(localStorage.getItem("face"))
   }
 
-  const AddtoCollection = async (Img) => {
+  const AddtoCollection = async (listName,Img) => {
     const formdata = new FormData();
     formdata.append("savedimg", Img);
     console.log(formdata)
-    await Axios.post(`http://localhost:3004/upload/${UserID}`, formdata).then((res) =>
+    await Axios.post(`http://localhost:3004/upload/${UserID}/${listName}`, formdata).then((res) =>
       console.log(res)).catch(err => console.log(err));
   }
   async function resizeImageFn(file) {
@@ -163,6 +164,14 @@ function GenerateMask(props) {
     const imgExt = img.ext
     const resizedFile = Compress.convertBase64ToFile(base64str, imgExt)
     return resizedFile;
+  }
+  const getListNames=async ()=>{
+    const doc=await Axios.get(`http://localhost:3004/ImageLists/${UserID}`);
+    const data=(doc.data.lists);
+    
+    let names=[];
+    data.map(list=>names.push(list.listName));
+    setNames(names);
   }
 
   const sendfiles = async () => {
@@ -310,9 +319,35 @@ function GenerateMask(props) {
               {newFace ?
                 <div>
                   <img src={newFace} height="256" /><br /><br />
-                  <Button onClick={async () => await AddtoCollection(customImg)}>
-                    Add to Default collection
-                  </Button>
+
+                  <Dropdown className="m" >
+
+                <Dropdown.Toggle variant="" className="listIcon" >
+                <Button onClick={()=>getListNames()}>
+                 Add to collection
+                </Button>
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu className="listmenu">
+
+                  { listNames.map((listName, idx)=>{
+                      return(
+                          <div key={idx}>
+                          
+                            <Dropdown.Item className="menuitem" 
+                            onClick={async ()=>{ await AddtoCollection(listName,customImg)
+                               
+                                }}>
+                                {listName}
+                            </Dropdown.Item>
+                          </div>
+                      )
+                  })}
+
+                </Dropdown.Menu>
+
+                </Dropdown>
+
                   {/* <Button onClick={()=>saveAs(localStorage.getItem("maskImage"),"image.jpg")}>
                     download
                   </Button> */}

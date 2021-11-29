@@ -4,9 +4,9 @@ import bcrypt from "bcrypt";
 import crypto from "crypto";
 import passport from "passport";
 import cookieSession from "cookie-session";
-
+// import session from "express-session";
 import  "./Connection/mongodb.js";// must be called before others 
-import {upload,gfs,gridFSBucket} from "./Connection/multer_GridFS.js";
+import {conn,upload,gfs,gridFSBucket} from "./Connection/multer_GridFS.js";
 import "./passport-config.js";
 import SignupModel from "./models/Signup.js";
 import SavedImagesModel from "./models/SavedImages.js";
@@ -23,7 +23,16 @@ app.use(cookieSession({
     name: 'hfg-session',
     keys: ['key1', 'key2']
   }))
-   
+
+// app.use(session({
+//     name:'session-id',
+//     secret:'123456xxx',
+//     saveUninitialized:false,
+//     resave:false,
+//     store:conn
+// }))
+
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -192,15 +201,17 @@ const getImages=async ({uid,res})=>{
     ).catch(err=>console.log(err));
 }
 
-const uploadTodb=async ({req,res,uid})=>{ // has to be modified
+const uploadTodb=async ({req,res})=>{ // has to be modified
     const filename=(req.file.filename)
     // console.log("in uploadTodb fxn")
     // console.log(req.data)
-    
+    const uid=req.params.uid;
+    const listName=req.params.listName;
+
     const new_img={img_name:"Imagexyz",img_url:filename};
     const query= {$push:{'lists.$.list':new_img}};
 
-    await SavedImagesModel.updateOne({_id:uid,'lists.listName':'DefaultList'},
+    await SavedImagesModel.updateOne({_id:uid,'lists.listName':listName},
        query).then(
         (result)=>{
             res.send("ok");
@@ -314,7 +325,7 @@ const verifyEmailLink=async ({uid,tokenId,res})=>{
             await new SavedImagesModel({_id:uid,
                 lists:[newColl]
                    }).save();
-           
+            
             res.redirect(`http://localhost:3000/user/${user._id}`);
         }
     }
@@ -407,7 +418,7 @@ const updateCollName=async (req,res)=>{
       const uid=req.body.uid;
       const currName=req.body.currName;
       const newName=req.body.newName;
-      
+
    try{
     const doc=await SavedImagesModel.findOne({_id:uid,'lists.listName':currName},"lists.$");
     console.log(doc);
@@ -459,9 +470,8 @@ app.get("/ImageLists/:uid", async (req,res)=>{
   }); 
 
 // uploading user images to default list as of now
-app.post(`/upload/:uid`,upload.single("savedimg"),async (req,res)=>{
-    const uid=req.params.uid;
-   await uploadTodb({req,res,uid});
+app.post(`/upload/:uid/:listName`,upload.single("savedimg"),async (req,res)=>{
+   await uploadTodb({req,res});
 });
 
 //uploading random images to db
